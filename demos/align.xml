@@ -1,0 +1,71 @@
+<?xml version="1.0" ?>
+
+<?xml-stylesheet type="text/css" href="align.css" ?>
+
+<feelin:application>
+	<Application>
+	  <Window id="win" style="background: fill url(feelin:resources/images/feelin.png) center no-repeat;" Title="Feelin : Groups" Open="true" Width="80%" Height="80%">
+		 <vbox>
+			<hbox>
+				<Widget style="width: 10px; background: yellow" />
+
+				<vbox>
+					<Widget style="height: 10px; background: yellow" />
+
+					<hbox class="box" style="width: auto" Align="start" Caption="start">
+						<Widget class="colorbox red" />
+						<Widget class="colorbox lime"/>
+						<Widget class="colorbox blue"/>
+					</hbox>
+
+					<hbox class="box" style="width: auto" Align="center" Caption="center">
+						<Widget class="colorbox red" />
+						<Widget class="colorbox lime"/>
+						<Widget class="colorbox blue"/>
+					</hbox>
+
+					<hbox class="box" style="width: auto" Align="end" Caption="end">
+						<Widget class="colorbox red" />
+						<Widget class="colorbox lime"/>
+						<Widget class="colorbox blue"/>
+					</hbox>
+
+					<Widget style="height: 10px; background: yellow" />
+				</vbox>
+
+				<Widget style="width: 10px; background: yellow" />
+			</hbox>
+
+			<hbox>
+				<Widget style="width: 10px; background: yellow" />
+
+				<vbox class="box" Align="start" Caption="start" style="min-width: 20px; min-height: 60px; max-width: 80px; max-height: 120px;">
+					<Widget class="red" />
+					<Widget class="lime" />
+					<Widget class="blue" />
+				</vbox>
+
+				<vbox class="box" Align="center" Caption="center" style="min-width: 20px; min-height: 60px; max-width: 80px; max-height: 120px;">
+					<Widget class="red" />
+					<Widget class="lime" />
+					<Widget class="blue" />
+				</vbox>
+
+				<vbox class="box" Align="end" Caption="end" style="min-width: 20px; min-height: 60px; max-width: 80px; max-height: 120px;">
+					<Widget class="red" />
+					<Widget class="lime" />
+					<Widget class="blue" />
+				</vbox>
+
+				<Widget style="width: 10px; background: yellow" />
+			</hbox>
+
+			<Widget style="height: 10px; background: yellow" />
+		 </vbox>
+	  </Window>
+   </Application>
+
+   <notify>
+	  <win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   </notify>
+</feelin:application>

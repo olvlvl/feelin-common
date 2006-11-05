@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<?xml-stylesheet href="gradients.css" type="text/css" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="Gradients" Open="true">
+			<Group Orientation="vertical">
+				<Group class="box" Caption="Two, Three, Four">
+					<Group SameSize="true" Caption="horizontal" style="border-top: 2px groove shadow; caption-position: up center;">
+						<Text class="gradient-box" Contents="red<br>blue" style="background: red blue" />
+						<Text class="gradient-box" Contents="red<br>lime<br>blue" style="background: red lime blue" />
+						<Text class="gradient-box" Contents="yellow<br>aqua<br>fuchsia<br>black" style="background: yellow aqua fuchsia black" />
+					</Group>
+
+					<Group SameSize="true" Caption="vertical" style="border-top: 2px groove shadow; caption-position: up center;">
+						<Text class="gradient-box" Contents="red<br>blue" style="background: 90° red blue" />
+						<Text class="gradient-box" Contents="red<br>lime<br>blue" style="background: 90° red lime blue" />
+						<Text class="gradient-box" Contents="yellow<br>aqua<br>fuchsia<br>black" style="background: 90° yellow aqua fuchsia black" />
+					</Group>
+				</Group>
+
+				<Group class="box" SameSize="true" Caption="Angles">
+					<Text class="gradient-box" Contents="0°" style="background: red blue 0°" />
+					<Text class="gradient-box" Contents="45°" style="background: red blue 45°" />
+					<Text class="gradient-box" Contents="90°" style="background: red blue 90°" />
+					<Text class="gradient-box" Contents="135°" style="background: red blue 135°" />
+					<Text class="gradient-box" Contents="180°" style="background: red blue 180°" />
+					<Text class="gradient-box" Contents="225°" style="background: red blue 225°" />
+					<Text class="gradient-box" Contents="270°" style="background: red blue 270°" />
+					<Text class="gradient-box" Contents="315°" style="background: red blue 315°" />
+				</Group>
+
+				<Group class="box" SameSize="true" Caption="Orientation">
+					<Text class="gradient-box" Orientation="horizontal" Contents="horizontal" style="background: yellow fuchsia 0°" />
+					<Text class="gradient-box" Orientation="horizontal" Contents="horizontal<br>clockwise" style="background: yellow fuchsia 0° clockwise" />
+					<Text class="gradient-box" Orientation="vertical" Contents="vertical" style="background: yellow fuchsia 0°" />
+					<Text class="gradient-box" Orientation="vertical" Contents="vertical<br>clockwise" style="background: yellow fuchsia 0° clockwise" />
+				</Group>
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

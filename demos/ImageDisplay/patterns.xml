@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+
+<?xml-stylesheet href="patterns.css" type="text/css" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="Patterns" Open="true">
+			<Group Orientation="vertical">
+				
+				<Group class="box" Caption="dots">
+					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow dots xsmall" />
+					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow dots small" />
+					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow dots medium" />
+					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow dots large" />
+				</Group>
+
+				<Group class="box" Caption="groove">
+					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow groove xsmall" />
+					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow groove small" />
+					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow groove medium" />
+					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow groove large" />
+				</Group>
+
+				<Group class="box" Caption="stripes">
+					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow stripes xsmall" />
+					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow stripes small" />
+					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow stripes medium" />
+					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow stripes large" />
+				</Group>
+
+				<Group class="box" Caption="oblique">
+					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow oblique xsmall" />
+					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow oblique small" />
+					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow oblique medium" />
+					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow oblique large" />
+				</Group>
+
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

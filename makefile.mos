@@ -1,0 +1,18 @@
+#
+#  Use this makefile to create feelin.library
+#
+
+include Feelin:Sources/_template/makefile.header.ppc
+
+Prefs.elf : Prefs.o
+
+	@ echo ">>"[1m$(@F)[0m
+	@ $(LINK) $(LOPT) -o $@ $^ -lfeelin_ppc -ldebug
+
+Setup.elf : Setup.o
+
+	@ echo ">>"[1m$(@F)[0m
+	@ $(LINK) $(LOPT) -o $@ $^ -lfeelin_ppc -ldebug
+
+clean:
+	@ Delete FORCE *.o Prefs.elf Setup.elf

@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="Feelin color keywords" Open="true">
+			<Group SameSize="true" Rows="2">
+				<Text HCenter="true" Contents="shine" style="background: shine" />
+				<Text HCenter="true" Contents="halfshine" style="background: halfshine" />
+				<Text HCenter="true" Contents="fill" style="background: fill" />
+				<Text HCenter="true" Contents="halfshadow" style="background: halfshadow" />
+				<Text HCenter="true" Contents="shadow" style="background: shadow" />
+				<Text HCenter="true" Contents="halfdark" style="background: halfdark" />
+				<Text HCenter="true" Contents="dark" style="background: dark" />
+				<Text HCenter="true" Contents="text" style="background: text" />
+				<Text HCenter="true" Contents="highlight" style="background: highlight" />
+				<Widget />
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

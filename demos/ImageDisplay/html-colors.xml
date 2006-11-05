@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="HTML4 color keywords" Open="true">
+			<Group Rows="4" SameSize="true">
+				<Text style="background: aqua; color: black" Contents="aqua" HCenter="true" />
+				<Text style="background: black; color: white" Contents="black" HCenter="true" />
+				<Text style="background: blue; color: white" Contents="blue" HCenter="true" />
+				<Text style="background: fuchsia; color: black" Contents="fuchsia" HCenter="true" />
+				<Text style="background: gray; color: white" Contents="gray" HCenter="true" />
+				<Text style="background: green; color: white" Contents="green" HCenter="true" />
+				<Text style="background: lime; color: black" Contents="lime" HCenter="true" />
+				<Text style="background: maroon; color: white" Contents="maroon" HCenter="true" />
+				<Text style="background: navy; color: white" Contents="navy" HCenter="true" />
+				<Text style="background: olive; color: white" Contents="olive" HCenter="true" />
+				<Text style="background: purple; color: white" Contents="purple" HCenter="true" />
+				<Text style="background: red; color: black" Contents="red" HCenter="true" />
+				<Text style="background: silver; color: white" Contents="silver" HCenter="true" />
+				<Text style="background: teal; color: white" Contents="teal" HCenter="true" />
+				<Text style="background: white; color: black" Contents="white" HCenter="true" />
+				<Text style="background: yellow; color: black" Contents="yellow" HCenter="true" />
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

@@ -1,0 +1,35 @@
+<?xml version="1.0" ?>
+
+<?xml-stylesheet href="pictures-positioning.css" type="text/css" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="Pictures : Positioning" Open="true">
+			<Group Orientation="vertical">
+				<Group Orientation="vertical">
+					<Group>
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat top left" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat top center" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat top right" />
+					</Group>
+
+					<Group>
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat center left" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat center" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat center right" />
+					</Group>
+
+					<Group>
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat bottom left" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat bottom center" />
+						<Image class="picture-box" SetMax="none" Spec="url(button.png) no-repeat bottom right" />
+					</Group>
+				</Group>
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

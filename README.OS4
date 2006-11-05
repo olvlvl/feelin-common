@@ -1,0 +1,39 @@
+There's a special process for compiling Feelin for OS4 (i don't have the time to modify the main makefile yet !) :
+
+1. Relpace the makefile by the OS4's one  :
+
+   - cli> cd feelin:sources/_template
+   - cli> delete makefile
+   - cli> copy makefile.os4 makefile
+
+2. If the libs directory is not created :
+
+   - cli> makedir feelin:libs
+   - cli> makedir feelin:libs/feelin
+
+3. You must compile feelin.library and all the classes
+
+   - cli> cd feelin:sources
+   - cli> make -f makefile.os4.gcc all
+
+   Note that there are other target available in sources/makefile.os4.gcc ; just type :
+
+   - cli> cd feelin:sources
+   - cli> make -f makefile.os4.gcc
+
+   to see the list of target
+
+For CorePNG, i used a special version of zlib and libpng that was adapted to feelin. The source is not provided
+yet, but it will be (it should be...). Anyway, the included .a libs are precompiled and ready to be linked !
+
+
+To compile the demos :
+
+   - cli> cd feelin:demos
+   - cli> make -f makefile.os4.gcc
+
+Have a nice time ! ;-)
+
+___
+   Hombre
+

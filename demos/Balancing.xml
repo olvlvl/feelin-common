@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+
+<!ENTITY font "Vera Sans/18">
+
+<feelin:application>
+
+	<Application
+		Title="Balancing"
+		Version="$VER: Balancing 1.00 (2002/09/23)"
+		Copyright="©2000-2004= Olivier Laviale"
+		Author="Olivier LAVIALE - (gofromiel@gofromiel.com)"
+		Description="Show balancing groups"
+		Base="BALANCING">
+
+		<Window id="win" Title="Feelin : Balancing" Open="true" Persist="width height">
+
+			<vbox id="g">
+				<hbox style="font: &font;;">
+					<Text Contents="Red" style="background: red;" VCenter="true" HCenter="true"/>
+					<Text Contents="Yellow" style="background: yellow;" VCenter="true" HCenter="true"/>
+					<Balance id="balance1" Persist="weights" />
+
+					<Text Contents="Lime" style="background: lime;" VCenter="true" HCenter="true" SetMax="both" />
+					<Text Contents="Aqua" style="background: aqua;" VCenter="true" HCenter="true"/>
+					<Text Contents="Blue" style="background: blue;" VCenter="true" HCenter="true"/>
+				</hbox>
+
+				<Balance id="balance2" Persist="weights"/>
+
+				<hbox style="font: &font;; max-width: 300px;">
+					<Text Contents="White" style="background: white; scheme: &lt;scheme text='black' /&gt;" VCenter="true" HCenter="true"/>
+					<Balance id="balance3" Persist="weights" />
+					<Text Contents="Black" style="background: black; scheme: &lt;scheme text='white' /&gt;" VCenter="true" HCenter="true"/>
+				</hbox>
+
+				<Text Contents="Fuchsia" style="background: fuchsia; font: &font;;" VCenter="true" HCenter="true"/>
+
+				<Bar />
+
+				<hbox>
+					<HLabel>Quick Balance</HLabel>
+					<Checkbox id="b">false</Checkbox>
+				</hbox>
+			</vbox>
+		</Window>
+	</Application>
+
+	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+		<b attribute="Selected" value="always" target="g" method="Set" message="FA_Balance_QuickDraw,value,FA_Group_Forward,true" />
+	</notify>
+</feelin:application>

@@ -1,0 +1,19 @@
+
+#include /Feelin/Sources/_template/makefile.header.os4
+
+funcs := f_stch f_stcd
+
+objs := $(addsuffix .o,$(funcs))
+
+all : $(objs)
+	@ Avail >NIL: FLUSH
+	@ ar rc Feelin:Include/lib/libfeelin_OS4.a $^
+	@ echo ">> [1mlibfeelin_OS4 compiled ![0m"
+
+clean :
+	@ delete #?.o
+
+%.o : %.c
+	@ echo ">> [1m$(<F)[0m $(COMP) $(COPT) $<"
+	@ $(COMP) $(COPT) $<
+

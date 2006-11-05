@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+
+<feelin:application>
+	<Application>
+		<Window id="win" Title="Orientation" Open="true">
+			<Group Orientation="vertical">
+				<Group class="box" Orientation="vertical" Caption="Vertical">
+					<Button>One</Button>
+					<Button>Two</Button>
+				</Group>
+
+				<Group class="box" Orientation="horizontal" Caption="Horizontal">
+					<Button>One</Button>
+					<Button>Two</Button>
+				</Group>
+			</Group>
+		</Window>
+   	</Application>
+
+   	<notify>
+		<win attribute="CloseRequest" value="true" target="application" method="Shutdown" />
+   	</notify>
+</feelin:application>

@@ -1,0 +1,14 @@
+# create all executables
+
+include $(FEELINTOP)/Sources/makefile.header.aros
+
+EXE:= Prefs Setup
+	
+all : $(EXE)
+	
+% : %.c
+	$(AROSCC) -I$(FEELINTOP)/Include -L$(FEELINTOP)/Include/lib $(FEELIN_COPT) $(FEELIN_LOPT) $< -lfeelin_aros -o $@
+	
+clean :
+
+	rm -f $(EXE)

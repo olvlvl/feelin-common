@@ -1,0 +1,19 @@
+#
+#  Use this makefile to create feelin.library
+#
+
+COMP := @ gcc -noixemul -Wall -O2 -I/Feelin/Include
+LIBS := -lfeelin
+
+all: Prefs_OS4 Setup_OS4
+
+Prefs_OS4 : Prefs.c
+
+	@ echo ">>"[1m$(@F)[0m
+	@ $(COMP) -o $@ $^ $(LIBS)
+
+Setup_OS4 : Setup.c
+
+	@ echo ">>"[1m$(@F)[0m
+	@ $(COMP) -o $@ $^ $(LIBS)
+
