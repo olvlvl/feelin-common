@@ -4,35 +4,35 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Patterns" Open="true">
+		<Window Id="win" Title="Patterns" Open="true">
 			<Group Orientation="vertical">
 				
-				<Group class="box" Caption="dots">
-					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow dots xsmall" />
-					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow dots small" />
-					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow dots medium" />
-					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow dots large" />
+				<Group Class="box" Caption="dots">
+					<Text Class="pattern-info" Contents="xsmall" Style="background: halfshine halfshadow dots xsmall" />
+					<Text Class="pattern-info" Contents="small" Style="background: halfshine halfshadow dots small" />
+					<Text Class="pattern-info" Contents="medium" Style="background: halfshine halfshadow dots medium" />
+					<Text Class="pattern-info" Contents="large" Style="background: halfshine halfshadow dots large" />
 				</Group>
 
-				<Group class="box" Caption="groove">
-					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow groove xsmall" />
-					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow groove small" />
-					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow groove medium" />
-					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow groove large" />
+				<Group Class="box" Caption="groove">
+					<Text Class="pattern-info" Contents="xsmall" Style="background: halfshine halfshadow groove xsmall" />
+					<Text Class="pattern-info" Contents="small" Style="background: halfshine halfshadow groove small" />
+					<Text Class="pattern-info" Contents="medium" Style="background: halfshine halfshadow groove medium" />
+					<Text Class="pattern-info" Contents="large" Style="background: halfshine halfshadow groove large" />
 				</Group>
 
-				<Group class="box" Caption="stripes">
-					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow stripes xsmall" />
-					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow stripes small" />
-					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow stripes medium" />
-					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow stripes large" />
+				<Group Class="box" Caption="stripes">
+					<Text Class="pattern-info" Contents="xsmall" Style="background: halfshine halfshadow stripes xsmall" />
+					<Text Class="pattern-info" Contents="small" Style="background: halfshine halfshadow stripes small" />
+					<Text Class="pattern-info" Contents="medium" Style="background: halfshine halfshadow stripes medium" />
+					<Text Class="pattern-info" Contents="large" Style="background: halfshine halfshadow stripes large" />
 				</Group>
 
-				<Group class="box" Caption="oblique">
-					<Text class="pattern-info" Contents="xsmall" style="background: halfshine halfshadow oblique xsmall" />
-					<Text class="pattern-info" Contents="small" style="background: halfshine halfshadow oblique small" />
-					<Text class="pattern-info" Contents="medium" style="background: halfshine halfshadow oblique medium" />
-					<Text class="pattern-info" Contents="large" style="background: halfshine halfshadow oblique large" />
+				<Group Class="box" Caption="oblique">
+					<Text Class="pattern-info" Contents="xsmall" Style="background: halfshine halfshadow oblique xsmall" />
+					<Text Class="pattern-info" Contents="small" Style="background: halfshine halfshadow oblique small" />
+					<Text Class="pattern-info" Contents="medium" Style="background: halfshine halfshadow oblique medium" />
+					<Text Class="pattern-info" Contents="large" Style="background: halfshine halfshadow oblique large" />
 				</Group>
 
 			</Group>

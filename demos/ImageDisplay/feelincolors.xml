@@ -2,17 +2,17 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Feelin color keywords" Open="true">
+		<Window Id="win" Title="Feelin color keywords" Open="true">
 			<Group SameSize="true" Rows="2">
-				<Text HCenter="true" Contents="shine" style="background: shine" />
-				<Text HCenter="true" Contents="halfshine" style="background: halfshine" />
-				<Text HCenter="true" Contents="fill" style="background: fill" />
-				<Text HCenter="true" Contents="halfshadow" style="background: halfshadow" />
-				<Text HCenter="true" Contents="shadow" style="background: shadow" />
-				<Text HCenter="true" Contents="halfdark" style="background: halfdark" />
-				<Text HCenter="true" Contents="dark" style="background: dark" />
-				<Text HCenter="true" Contents="text" style="background: text" />
-				<Text HCenter="true" Contents="highlight" style="background: highlight" />
+				<Text HCenter="true" Contents="shine" Style="background: shine" />
+				<Text HCenter="true" Contents="halfshine" Style="background: halfshine" />
+				<Text HCenter="true" Contents="fill" Style="background: fill" />
+				<Text HCenter="true" Contents="halfshadow" Style="background: halfshadow" />
+				<Text HCenter="true" Contents="shadow" Style="background: shadow" />
+				<Text HCenter="true" Contents="halfdark" Style="background: halfdark" />
+				<Text HCenter="true" Contents="dark" Style="background: dark" />
+				<Text HCenter="true" Contents="text" Style="background: text" />
+				<Text HCenter="true" Contents="highlight" Style="background: highlight" />
 				<Widget />
 			</Group>
 		</Window>

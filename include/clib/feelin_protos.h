@@ -47,7 +47,7 @@ void                    F_AlertA                (STRPTR Title,STRPTR Body,int32 
 
 FHashTable *            F_HashCreate            (uint32 Size);
 void                    F_HashDelete            (FHashTable *Table);
-FHashLink *             F_HashFind              (FHashTable *Table,UBYTE *Key,uint32 KeyLenght,uint32 *HashValuePtr);
+FHashLink *             F_HashFind              (FHashTable *Table,UBYTE *Key,uint32 KeyLenght,volatile uint32 *HashValuePtr);
 FHashLink *             F_HashAddLink           (FHashTable *Table,FHashLink *Link);
 int32                   F_HashRemLink           (FHashTable *Table,FHashLink *Link);
 FHashLink *             F_HashAdd               (FHashTable *Table,UBYTE *Key,uint32 KeyLength,APTR Data);
@@ -57,8 +57,8 @@ int32                   F_HashRem               (FHashTable *Table,UBYTE *Key,ui
 
 int32                   F_DynamicCreate         (FClass *feelin_class);
 void                    F_DynamicDelete         (FClass *feelin_class);
-FClassAttribute *       F_DynamicFindAttribute  (STRPTR Name,FClass *FromClass,FClass **RealClassPtr);
-FClassMethod *          F_DynamicFindMethod     (STRPTR Name,FClass *FromClass,FClass **RealClassPtr);
+FClassAttribute *       F_DynamicFindAttribute  (STRPTR Name,FClass *FromClass,volatile FClass **RealClassPtr);
+FClassMethod *          F_DynamicFindMethod     (STRPTR Name,FClass *FromClass,volatile FClass **RealClassPtr);
 uint32                  F_DynamicFindID         (STRPTR Name);
 void                    F_DynamicResolveTable   (FDynamicEntry *Entries);
 int32                   F_DynamicAddAutoTable   (FDynamicEntry *Table);

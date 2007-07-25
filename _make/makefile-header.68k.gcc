@@ -1,0 +1,42 @@
+#
+# makefile header
+#
+
+# platform
+
+export PLATFORM := 68k
+
+# common
+
+export SRC  := /Feelin/Sources
+export DST  := /Feelin/Libs/Feelin
+export CATS := /Feelin/Locale/Catalogs/Français
+export EXT  := fc
+
+# compiler
+
+export COMPILER := gcc
+export COMPILER_OPTIONS := -m68040 -noixemul -Wall -O2 -pipe -I/Feelin/Include
+export COMPILER_CLASS_OPTIONS := -c
+export COMPILER_OBJECT := -o
+
+# linker
+
+export LINKER := gcc
+export LINKER_OPTIONS := -L /Feelin/Include/lib
+#export LINKER_OPTIONS += -Wl,-Map=T:map ## create a map of symbols
+#export LINKER_OPTIONS += -s ## remove all symbols
+export LINKER_CLASSES_OPTIONS := -noixemul -nostartfiles
+export LINKER_LIBS := -lamiga -lfeelin_$(PLATFORM)
+export LINKER_OUTPUT := -o
+
+# flush
+
+export FLUSH := /c/avail >NIL: FLUSH
+
+# create
+
+%.o : %.c
+	@ echo ">>"[1m$(<F)[0m $(COMPLIER) $(COMPILER_OPTIONS) $@
+	@ $(COMPILER) $(COMPILER_OPTIONS) $(COMPILER_CLASS_OPTIONS) $(COMPILER_OBJECT) $@ $<
+

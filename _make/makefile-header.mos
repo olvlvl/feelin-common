@@ -1,0 +1,41 @@
+#
+# makefile header
+#
+
+# platform
+
+export PLATFORM := mos
+
+# common
+
+export SRC  := /Feelin/Sources
+export DST  := /Feelin/Libs/Feelin
+export CATS := /Feelin/Locale/Catalogs/Français
+export EXT  := fc
+
+# compiler
+
+export COMPILER := ppc-morphos-gcc
+export COMPILER_OPTIONS := -mcpu=750 -pipe -noixemul -g -Wall -O2 -fomit-frame-pointer \
+	-mmultiple -mstring -mfused-madd \
+	-DAROS_ALMOST_COMPATIBLE -D__MORPHOS_NOSHAREDLIBS -I. -I/Feelin/Include
+export COMPILER_CLASS_OPTIONS := -c
+export COMPILER_OBJECT := -o
+
+# linker
+
+export LINKER := ppc-morphos-gcc
+export LINKER_OPTIONS := -mcpu=750 -pipe -noixemul -L/Feelin/Include/lib
+export LINKER_CLASSES_OPTIONS := -nostartfiles
+export LINKER_LIBS := -lamiga -lfeelin_$(PLATFORM)
+export LINKER_OUTPUT := -o
+
+# flush
+
+export FLUSH := Avail >NIL: FLUSH
+
+# create
+
+%.o : %.c
+	@ echo ">>"[1m$(<F)[0m $(COMPLIER) $(COMPILER_OPTIONS) $@
+	@ $(COMPILER) $(COMPILER_OPTIONS) $(COMPILER_CLASS_OPTIONS) $(COMPILER_OBJECT) $@ $<

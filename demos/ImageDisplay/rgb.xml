@@ -2,12 +2,12 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="RGB color values" Open="true">
+		<Window Id="win" Title="RGB color values" Open="true">
 			<Group SameSize="true">
-				<Text Contents="red" HCenter="true" style="background: #F00" />
-				<Text Contents="red" HCenter="true" style="background: #FF0000" />
-				<Text Contents="red" HCenter="true" style="background: rgb(255,0,0)" />
-				<Text Contents="red" HCenter="true" style="background: rgb(100%, 0%, 0%)" />
+				<Text Contents="<align=center>red<br>#F00" VCenter="true" HCenter="true" Style="background: #F00; color: white;" />
+				<Text Contents="<align=center>red<br>#FF0000" VCenter="true" HCenter="true" Style="background: #FF0000; color: white;" />
+				<Text Contents="<align=center>red<br>rgb(255,0,0)" VCenter="true" HCenter="true" Style="background: rgb(255,0,0); color: white;" />
+				<Text Contents="<align=center>red<br>rgb(100%,0%,0%)" VCenter="true" HCenter="true" Style="background: rgb(100%, 0%, 0%); color: white;" />
 			</Group>
 		</Window>
    	</Application>

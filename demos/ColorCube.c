@@ -59,7 +59,7 @@ FPalette * Cube_Create(FClass *Class,FObject Obj)
 			LOD->Palette = NULL;
 		}
 
-		if (orgb = IFEELIN F_New(seg * seg * sizeof (uint32)))
+		if ((orgb = IFEELIN F_New(seg * seg * sizeof (uint32))) != NULL)
 		{
 			step = 256 / (seg - 1);
 
@@ -224,11 +224,20 @@ F_METHODM(void,Cube_Draw,FS_Area_Draw)
 
 STATIC F_METHODS_ARRAY =
 {
-	F_METHODS_ADD_STATIC(Cube_New,   FM_New),
-	F_METHODS_ADD_STATIC(Cube_Set,   FM_Set),
-	F_METHODS_ADD_STATIC(Cube_Show,  FM_Area_Show),
-	F_METHODS_ADD_STATIC(Cube_Hide,  FM_Area_Hide),
-	F_METHODS_ADD_STATIC(Cube_Draw,  FM_Area_Draw),
+	F_METHODS_OVERRIDE_STATIC(Cube_New,   FM_New),
+	F_METHODS_OVERRIDE_STATIC(Cube_Set,   FM_Set),
+	F_METHODS_OVERRIDE_STATIC(Cube_Show,  FM_Area_Show),
+	F_METHODS_OVERRIDE_STATIC(Cube_Hide,  FM_Area_Hide),
+	F_METHODS_OVERRIDE_STATIC(Cube_Draw,  FM_Area_Draw),
+
+	F_ARRAY_END
+};
+
+STATIC F_TAGS_ARRAY =
+{
+	F_TAGS_ADD_LOD,
+	F_TAGS_ADD_SUPER(Widget),
+	F_TAGS_ADD_METHODS,
 
 	F_ARRAY_END
 };
@@ -242,19 +251,7 @@ int main()
 		FClass  *cl;
 		FObject  app,win,cub,sld;
 
-/*
-	  #ifdef __VBCC__
-	  GfxBase = FeelinBase->Graphics;
-	  UtilityBase = FeelinBase->Utility;
-	  #endif
-*/
-		cl = IFEELIN F_CreateClass(NULL,
-			
-			FA_Class_LODSize,  sizeof (struct LocalObjectData),
-			FA_Class_Super,    FC_Widget,
-			FA_Class_Methods,  F_METHODS_PTR,
-			
-			TAG_DONE);
+		cl = IFEELIN F_CreateClassA(NULL, F_TAGS_PTR);
 			
 		if (cl)
 		{
@@ -267,7 +264,7 @@ int main()
 				FA_Application_Base,         "demo_Cude",
 
 				Child, win = WindowObject,
-					FA_Element_ID,               	"windows.main",
+					FA_Element_Id,          "windows.main",
 					FA_Element_Persist,		"width height",
 					FA_Window_Title,     	"Feelin : Cube",
 					FA_Window_Open,      	TRUE,
@@ -286,7 +283,7 @@ int main()
 							
 							Child, sld = IFEELIN F_MakeObj(FV_MakeObj_Slider, TRUE,2,16,5,
 								
-								FA_Element_ID,            	"cube-width",
+								FA_Element_Id, "cube-width",
 								FA_Element_Persist, "value",
 								FA_Widget_SetMax,	FV_Widget_SetHeight,
 								//FA_ContextHelp,     "Adjust the number of color segment per corner.",

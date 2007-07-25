@@ -1,0 +1,9 @@
+include Feelin:_make/makefile-header
+
+objs := $(patsubst %.c,%.o,$(wildcard *.c))
+
+$(DST)/$(NAME).$(EXT) : $(objs)
+	@ $(FLUSH)
+	$(LINKER) $(LINKER_OPTIONS) $(LINKER_CLASSES_OPTIONS) Project.o $(filter-out Project.o, $^) $(LINKER_OUTPUT) $(DST)/$(NAME).$(EXT) $(LINKER_LIBS) $(LINKER_LIBS_APPEND)
+	@ echo ">>" [1m$(DST)/$(NAME).$(EXT)[0m Version [1m$(VER).$(REV)[0m
+

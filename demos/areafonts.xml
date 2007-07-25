@@ -7,27 +7,27 @@
 
 <feelin:application>
    <Application>
-	  <Window id="win" Title="Feelin : Different fonts" Open="true">
+	  <Window Id="win" Title="Feelin : Different fonts" Open="true">
 		 <Group Orientation="vertical">
-			<Group class="box" Caption="&font1;" style="font: &font1;; caption-font: &font1;;">
+			<Group Class="box" Caption="&font1;" Style="font: &font1;; caption-font: &font1;;">
 			   <Button>Save</Button>
 			   <Button>Use</Button>
 			   <Button>Cancel</Button>
 			</Group>
 
-			<Group class="box" Caption="&font2;" style="font: &font2;; caption-font: &font2;;">
+			<Group Class="box" Caption="&font2;" Style="font: &font2;; caption-font: &font2;;">
 			   <Button>Save</Button>
 			   <Button>Use</Button>
 			   <Button>Cancel</Button>
 			</Group>
 
-			<Group class="box" Caption="&font3;" style="font: &font3;; caption-font: &font3;;">
+			<Group Class="box" Caption="&font3;" Style="font: &font3;; caption-font: &font3;;">
 			   <Button>Save</Button>
 			   <Button>Use</Button>
 			   <Button>Cancel</Button>
 			</Group>
 
-			<Group class="box" Caption="&font4;" style="font: &font4;; caption-font: &font4;;">
+			<Group Class="box" Caption="&font4;" Style="font: &font4;; caption-font: &font4;;">
 			   <Button>Save</Button>
 			   <Button>Use</Button>
 			   <Button>Cancel</Button>

@@ -211,9 +211,9 @@ FV_Widget_Align_Start
 FV_Widget_Align_End
 FV_Widget_DnDReport_Motion
 FV_Widget_DnDReport_Timer
-FV_Widget_Mode_Immediate
+FV_Widget_Mode_Touch
 FV_Widget_Mode_Inert
-FV_Widget_Mode_Release
+FV_Widget_Mode_Button
 FV_Widget_Mode_Toggle
 FV_Window_ActiveObject_Next
 FV_Window_ActiveObject_None

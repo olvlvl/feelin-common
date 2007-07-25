@@ -4,7 +4,7 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Feelin : &hello;" Open="true">
+		<Window Id="win" Title="Feelin : &hello;" Open="true">
 			<Button>_&hello;</Button>
 		</Window>
    	</Application>

@@ -4,9 +4,21 @@
 /*
 **    feelin.h
 **
-**    © 2001-2006 Olivier LAVIALE (gofromiel@gofromiel.com)
+**    © 2001-2007 Olivier LAVIALE (gofromiel@gofromiel.com)
 **
 *************************************************************************************************
+
+$VER: 12.00 (2007/??/??)
+
+	CLASS
+	---------------------------------------------------------------------------------------------
+
+	The F_METHOD_ADD_STATIC macro has been renamed as F_METHOD_OVERRIDE_STATIC
+	The F_METHOD_ADD_BOTH macro has been renamed as F_METHOD_ADD_STATIC
+
+	Added the F_METHOD_OVERRIDE macro, similar to  the  F_METHOD_ADD  macro,
+	but used when overriding methods.
+
 
 $VER: 11.00 (2006/05/26)
 
@@ -104,7 +116,7 @@ $VER: 11.00 (2006/05/26)
 
 */
 
-/// Module information
+/// Include information
 
 /*
    All constants follow these rules :
@@ -139,7 +151,7 @@ $VER: 11.00 (2006/05/26)
    Since v6 of feelin.library most classes use dynamic IDs instead of static
    ones.  Dynamic  IDs  are  generated on the fly at run time, thus they are
    different at each session and future proof. You should  have  a  look  at
-   Feelin_DEV.guide to learn more about this.
+   http://www.feelin.fr/guide/ to learn more about this.
 
 */
 
@@ -195,13 +207,7 @@ struct FeelinBase
 	struct DosLibrary              *DOS;
 	struct GfxBase                 *Graphics;
 	struct IntuitionBase           *Intuition;
-
-	#ifdef __amigaos4__
 	struct UtilityBase             *Utility;
-	#else
-	struct Library                 *Utility;
-	#endif
-
 	struct Library                 *Layers;
 	struct Library                 *Locale;
 
@@ -408,7 +414,15 @@ enum    {
 #define FM_Disconnect                           (FR_Object_MTHD + 13)
 #define FM_AddMember                            (FR_Object_MTHD + 14)
 #define FM_RemMember                            (FR_Object_MTHD + 15)
+#ifdef F_NEW_LISTENERS
+#define FM_AddListener                          (FR_Object_MTHD + 16)
+#define FM_RemoveListener                       (FR_Object_MTHD + 17)
+#endif
+#ifdef F_NEW_GETELEMENTBYID
+#define FM_GetElementById                       (FR_Object_MTHD + 18)
+#endif
 
+struct  FS_Lock                                 { bits32 Flags; };
 struct  FS_Notify                               { uint32 Attribute; uint32 Value; FObject Target; uint32 Method; uint32 Count; /*...*/ };
 struct  FS_UnNotify                             { FNotifyHandler *Handler; };
 struct  FS_CallHook                             { struct Hook *Hook; /*...*/ };
@@ -420,16 +434,18 @@ struct  FS_SetAs                                { bits32 Flags; uint32 Attribute
 struct  FS_Connect                              { FObject Parent; };
 struct  FS_AddMember                            { FObject Orphan; uint32 Position; FObject Previous; };
 struct  FS_RemMember                            { FObject Member; };
-struct  FS_Lock                                 { bits32 Flags; };
+#ifdef F_NEW_LISTENERS
+struct 	FS_AddListener							{ STRPTR Attribute; struct Hook *Callback; /* ... */ };
+struct	FS_RemoveListener						{ STRPTR Attribute; struct Hook *Callback; };
+#endif
+#ifdef F_NEW_GETELEMENTBYID
+struct	FS_GetElementById						{ STRPTR Id; };
+#endif
 
 #define FA_UserData                             (FR_Object_ATTR + 0)
 #define FA_NoNotify                             (FR_Object_ATTR + 1)
 #define FA_Child                                (FR_Object_ATTR + 2)
-#define FA_Parent                               (FR_Object_ATTR + 3)
-
-#ifndef F_NEW_ELEMENT_ID
-#define FA_ID                                   (FR_Object_ATTR + 4)
-#endif
+//#define FA_Element_Parent                       (FR_Object_ATTR + 3)
 
 enum    {
 
@@ -468,6 +484,17 @@ enum    {
 #define FF_Lock_Shared                          (1 << 1)
 #define FF_Lock_Attempt                         (1 << 2)
 
+#ifdef F_NEW_LISTENERS
+
+struct FS_Listener_Trigger
+{
+	uint32								Id;
+	uint32								Value;
+	FClassAttribute						*Attribute;
+};
+
+#endif
+
 #define _object_class(object_)                  ((FClass *)(((uint32 *)(object_))[-1]))
 #define _object_classname(object_)              (_object_class(object_)->Name)
 
@@ -480,7 +507,7 @@ enum    {
 
 #define FA_Class_Name                           (FR_Class_ATTR +  0)
 #define FA_Class_Super                          (FR_Class_ATTR +  1)
-#define FA_Class_LODSize                        (FR_Class_ATTR +  2)
+#define FA_Class_LocalSize                      (FR_Class_ATTR +  2)
 #define FA_Class_Dispatcher                     (FR_Class_ATTR +  3)
 #define FA_Class_UserData                       (FR_Class_ATTR +  4)
 #define FA_Class_Pool                           (FR_Class_ATTR +  5)
@@ -494,12 +521,8 @@ enum    {
 #define FA_Class_Atoms                          (FR_Class_ATTR + 13)
 #define FA_Class_Revision                       (FR_Class_ATTR + 14)
 #define FA_Class_Version                        (FR_Class_ATTR + 15)
-#ifdef F_NEW_STYLES
 #define FA_Class_Properties                     (FR_Class_ATTR + 16)
-#endif
-#ifdef F_NEW_STYLES_EXTENDED
 #define FA_Class_PropertiesLocalSize            (FR_Class_ATTR + 17)
-#endif
 
 enum    {
 
@@ -519,13 +542,8 @@ enum    {
 #define F_STORE(val)                            *((uint32 *)(item.ti_Data)) = (uint32)(val)
 #define F_LOD(cl,o)                             ((APTR)((uint32)(o) + cl->Offset))
 
-#define F_ID(tab,n)                             (tab[n].ID)
-
 #if F_CODE_DEPRECATED
-#define F_IDM(n)                                F_ID(Class->Methods,n)
-#define F_IDA(n)                                F_ID(Class->Attributes,n)
-#define F_IDR(n)                                F_ID(Class->ResolvedIDs,n)
-#define F_IDO(n)                                F_ID(Class->AutoResolvedIDs,n)
+#define F_ID(tab,n)                             (tab[n].ID)
 #endif
 
 #define F_CAT(n)                                FCC_CatalogTable[CAT_##n].String
@@ -535,26 +553,13 @@ enum    {
 #define F_ARRAY_END                             { NULL }
 
 
-#ifdef F_NEW_ATOMS_AMV
-
-#define F_VALUES_ARRAY(name)                    F_ARRAY_NEW(FClassAttributeValue,values_##name)
-#define F_VALUES_ADD(name,value)                { { name, NULL }, value }
-#define _value_name(value)                      value->CAtom.Name
-#define _value_atom(value)                      value->CAtom.Atom
-
-#else
-
 #define F_VALUES_ARRAY(name)                    F_ARRAY_NEW(FClassAttributeValue,values_##name)
 #define F_VALUES_ADD(name,value)                { name, value }
 #define _value_name(value)                      value->Name
 
-#endif
-
 
 #define F_VALUES_EACH(source, entry)            entry = source ; _value_name(entry) ; entry++
 
-
-#ifdef F_NEW_STYLES
 
 #define F_PROPERTIES_ARRAY                      F_ARRAY_NEW(FClassProperty, properties)
 #define F_PROPERTIES_ADD(name)                  { name, NULL, NULL }
@@ -566,22 +571,9 @@ enum    {
 
 #define F_CLASS_EACH_PROPERTY(source, entry)    entry = source ; entry->Name ; entry++
 
-#endif
-
-
-#ifdef F_NEW_ATOMS_AMV
-
-#define F_ATTRIBUTES_ARRAY                                          F_ARRAY_NEW(FClassAttribute,attributes)
-#define F_ATTRIBUTES_ADD(name,type)                                 { { name, NULL }, type, 0, NULL }
-#define F_ATTRIBUTES_ADD_VALUES(name,type,values)                   { { name, NULL }, type, 0, F_ARRAY_PTR(values_##values) }
-#define F_ATTRIBUTES_ADD_STATIC(name,type,id)                       { { name, NULL }, type, id, NULL }
-#define F_ATTRIBUTES_ADD_STATIC_VALUES(name,type,id,values)         { { name, NULL }, type, id, F_ARRAY_PTR(values_##values) }
-#define F_ATTRIBUTES_PTR                                            F_ARRAY_PTR(attributes)
-
-#define _attribute_name(attribute)                          attribute->CAtom.Name
-#define _attribute_atom(attribute)                          attribute->CAtom.Atom
-
-#else
+//
+// attributes
+//
 
 #define F_ATTRIBUTES_ARRAY                                          F_ARRAY_NEW(FClassAttribute,attributes)
 #define F_ATTRIBUTES_ADD(name,type)                                 { name, type,  0, NULL }
@@ -594,40 +586,32 @@ enum    {
 
 #define _attribute_name(attribute)                          attribute->Name
 
-#endif
-
 #define F_ATTRIBUTE_ID(id)                      Class->Attributes[FV_ATTRIBUTE_##id].ID
 #define F_ATTRIBUTES_EACH(source, entry)        entry = source ; _attribute_name(entry) ; entry++
 
-#ifdef F_NEW_ATOMS_AMV
+//
+// methods
+//
 
 #define F_METHODS_ARRAY                         F_ARRAY_NEW(FClassMethod,methods)
 #define F_METHODS_ARRAY_NAME(name)              F_ARRAY_NEW(FClassMethod,methods_##name)
-#define F_METHODS_ADD_BOTH(func,name,id)        { (FMethod) F_FUNCTION_GATE(func), { name, NULL }, id }
-#define F_METHODS_ADD_STATIC(func,id)           F_METHODS_ADD_BOTH(func,NULL,id)
-#define F_METHODS_ADD(func,name)                F_METHODS_ADD_BOTH(func,name,0)
-#define F_METHODS_PTR                           F_ARRAY_PTR(methods)
-#define F_METHODS_NAME_PTR(name)                F_ARRAY_PTR(methods##name)
-
-#define _method_name(method)                    method->CAtom.Name
-#define _method_atom(method)                    method->CAtom.Atom
-
-#else
-
-#define F_METHODS_ARRAY                         F_ARRAY_NEW(FClassMethod,methods)
-#define F_METHODS_ARRAY_NAME(name)              F_ARRAY_NEW(FClassMethod,methods_##name)
-#define F_METHODS_ADD_BOTH(func,name,id)        { (FMethod) F_FUNCTION_GATE(func), name, id }
-#define F_METHODS_ADD_STATIC(func,id)           F_METHODS_ADD_BOTH(func,NULL,id)
-#define F_METHODS_ADD(func,name)                F_METHODS_ADD_BOTH(func,name,0)
+#define F_METHODS_ADD_PRIVATE(func,name,id)     { (FMethod) F_FUNCTION_GATE(func), name, id }
+#define F_METHODS_ADD(func,name)                F_METHODS_ADD_PRIVATE(func,name,0)
+#define F_METHODS_ADD_STATIC(func,name,id)      F_METHODS_ADD_PRIVATE(func,name,id)
+#define F_METHODS_OVERRIDE(func, class, name)	F_METHODS_ADD_PRIVATE(func, "FM_" class "_" name,0)
+#define F_METHODS_OVERRIDE_STATIC(func, id)		F_METHODS_ADD_PRIVATE(func,NULL,id)
+#define F_METHODS_OVERRIDE_STATIC(func, id)		F_METHODS_ADD_PRIVATE(func,NULL,id)
 #define F_METHODS_PTR                           F_ARRAY_PTR(methods)
 #define F_METHODS_NAME_PTR(name)                F_ARRAY_PTR(methods##name)
 
 #define _method_name(method)                    method->Name
 
-#endif
-
 #define F_METHOD_ID(id)                         Class->Methods[FV_METHOD_##id].ID
 #define F_METHODS_EACH(source, entry)           entry = source ; entry->Function ; entry++
+
+//
+// resolveds
+//
 
 #define F_RESOLVEDS_ARRAY                       F_ARRAY_NEW(FDynamicEntry,resolves)
 #define F_RESOLVEDS_ARRAY_NAME(name)            F_ARRAY_NEW(FDynamicEntry,resolves##name)
@@ -638,6 +622,10 @@ enum    {
 #define F_RESOLVED_ID(id)                       Class->Resolveds[FV_RESOLVED_##id].ID
 #define F_RESOLVEDS_EACH(source, entry)         entry = source ; source->Name ; entry++
 
+//
+// autos
+//
+
 #define F_AUTOS_ARRAY                           F_ARRAY_NEW(FDynamicEntry,autos)
 #define F_AUTOS_ARRAY_NAME(name)                F_ARRAY_NEW(FDynamicEntry,autos##name)
 #define F_AUTOS_ADD(name)                       { name, 0 }
@@ -646,6 +634,10 @@ enum    {
 
 #define F_AUTO_ID(id)                           Class->Autos[FV_AUTO_##id].ID
 #define F_AUTOS_EACH(source, entry)             entry = source ; source->Name ; entry++
+
+//
+// atoms
+//
 
 #define F_ATOMS_ARRAY                           F_ARRAY_NEW(FClassAtom,atoms)
 #define F_ATOMS_ARRAY_NAME(name)                F_ARRAY_NEW(FClassAtom,atoms##name)
@@ -657,13 +649,19 @@ enum    {
 #define F_ATOM_KEY(id)                          F_ATOM(id)->Key
 #define F_ATOM_KEYLENGTH(id)                    F_ATOM(id)->KeyLength
 
+//
+// tags
+//
+
 #define F_TAGS_ARRAY                            F_ARRAY_NEW(struct TagItem,tags)
 #define F_TAGS_ARRAY_NAME(name)                 F_ARRAY_NEW(struct TagItem,tags##name)
 #define F_TAGS_ADD(tag,data)                    { FA_Class_##tag, (uint32) data }
 #define F_TAGS_PTR                              F_ARRAY_PTR(tags)
 #define F_TAGS_NAME_PTR(name)                   F_ARRAY_PTR(tags##name)
 
-/* Predefined tags */
+//
+// predefined tags
+//
 
 #define F_TAGS_ADD_ATTRIBUTES                   F_TAGS_ADD(Attributes, F_ATTRIBUTES_PTR)
 #define F_TAGS_ADD_METHODS                      F_TAGS_ADD(Methods, F_METHODS_PTR)
@@ -671,22 +669,16 @@ enum    {
 #define F_TAGS_ADD_AUTOS                        F_TAGS_ADD(Autos, F_AUTOS_PTR)
 #define F_TAGS_ADD_CATALOG                      F_TAGS_ADD(CatalogTable, FCC_CatalogTable)
 #define F_TAGS_ADD_DISPATCHER(name)             F_TAGS_ADD(Dispatcher, F_FUNCTION_GATE(name))
-#define F_TAGS_ADD_LOD                          F_TAGS_ADD(LODSize, sizeof (struct LocalObjectData))
+#define F_TAGS_ADD_LOD                          F_TAGS_ADD(LocalSize, sizeof (struct LocalObjectData))
 //#define F_TAGS_ADD_LPD                          F_TAGS_ADD(LODSize, sizeof (struct LocalPreferenceData))
 //#define F_TAGS_ADD_LCD                          F_TAGS_ADD(LODSize, sizeof (struct LocalClassData))
 #define F_TAGS_ADD_SUPER(name)                  F_TAGS_ADD(Super, FC_##name)
 #define F_TAGS_ADD_ATOMS                        F_TAGS_ADD(Atoms, F_ATOMS_PTR)
 
-#ifdef F_NEW_STYLES
 #define F_TAGS_ADD_PROPERTIES                   F_TAGS_ADD(Properties, F_PROPERTIES_PTR)
-#endif
-
-#ifdef F_NEW_STYLES_EXTENDED
 
 #define F_LPD(class, space)                     ((APTR) ((uint32)(space) + class->PropertiesOffset))
 #define F_TAGS_ADD_PROPERTIES_SIZE(pseudos)     F_TAGS_ADD(PropertiesLocalSize, sizeof (struct LocalPropertiesData) * (1 + (pseudos)))
-
-#endif
 //+
 
 /************************************************************************************************
@@ -1017,11 +1009,7 @@ struct  FS_Element_CreateDecodedStyle           { APTR DecodedSpace; FPreference
 struct  FS_Element_DeleteDecodedStyle           { APTR DecodedSpace; };
 
 #define FA_Element_PublicData                   (FR_Element_ATTR + 0)
-
-#ifdef F_NEW_ELEMENT_ID
-#define FA_Element_ID                           (FR_Element_ATTR + 1)
-#endif
-
+#define FA_Element_Id                           (FR_Element_ATTR + 1)
 #define FA_Element_Persist                      (FR_Element_ATTR + 2)
 #define FA_Element_Class                        (FR_Element_ATTR + 3)
 #define FA_Element_Style                        (FR_Element_ATTR + 4)
@@ -1033,6 +1021,9 @@ struct  FS_Element_DeleteDecodedStyle           { APTR DecodedSpace; };
 
 #define FA_Element_DecodedStyle                 (FR_Element_ATTR + 7)
 #define FA_Element_ComposedStyle                (FR_Element_ATTR + 8)
+#define FA_Element_Parent                       (FR_Element_ATTR + 9)
+
+
 
 #ifdef F_NEW_GLOBALCONNECT
 
@@ -1328,6 +1319,19 @@ enum    {	// Align
 		};
 
 
+#ifdef F_NEW_WIDGET_MODE
+
+enum	{	// Mode
+
+		FV_Widget_Mode_Inert,
+		FV_Widget_Mode_Touch,
+		FV_Widget_Mode_Toggle,
+		FV_Widget_Mode_Button
+
+		};
+
+#else
+
 enum    {	// Mode
 
 		FV_Widget_Mode_Inert,
@@ -1336,6 +1340,8 @@ enum    {	// Mode
 		FV_Widget_Mode_Toggle
 
 		};
+
+#endif
 
 enum    {	// SetMin, SetMax
 
@@ -1395,6 +1401,13 @@ typedef struct FeelinWidgetPublic
 	uint16                                      Weight;
 	uint8                                       Align;
 	uint8                                       _pad0;
+
+	#ifdef F_NEW_WIDGET_PUBLIC
+
+	FElementPublic							   	*ElementPublic;
+	FAreaPublic									*AreaPublic;
+
+	#endif
 }
 FWidgetPublic;
 
@@ -1434,6 +1447,73 @@ a  field  'AreaData'  of  type  (FAreaData  *).  If it is not the case undef
 #define _widget_isnt_group                      ((_widget_flags & FF_Widget_Group) == 0)
 #define _widget_weight                          (_widget_public Weight)
 #define _widget_align                           (_widget_public Align)
+
+#ifdef F_NEW_WIDGET_PUBLIC
+
+/* Area shortcuts */
+/*
+#define _widget_area_public                     _widget_public AreaPublic->
+#define _widget_area_flags                      (_widget_area_public Flags)
+#define _widget_state                           (_widget_area_public State)
+#define _widget_padding                         (_widget_area_public Padding)
+#define _widget_border                          (_widget_area_public Border)
+#define _widget_margin                          (_widget_area_public Margin)
+#define _widget_font                            (_widget_area_public Font)
+#define _widget_background                      (_widget_area_public Background)
+
+#define _widget_is_horizontal                   ((FF_Area_Horizontal & _widget_area_flags) != 0)
+#define _widget_isnt_horizontal                 ((FF_Area_Horizontal & _widget_area_flags) == 0)
+#define _widget_is_damaged                      ((FF_Area_Damaged & _widget_area_flags) != 0)
+#define _widget_isnt_damaged                    ((FF_Area_Damaged & _widget_area_flags) == 0)
+#define _widget_set_damaged                     _widget_area_flags |= FF_Area_Damaged
+#define _widget_clear_damaged                   _widget_area_flags &= ~FF_Area_Damaged
+#define _widget_is_drawable                     ((FF_Area_Drawable & _widget_area_flags) != 0)
+#define _widget_isnt_drawable                   ((FF_Area_Drawable & _widget_area_flags) == 0)
+#define _widget_set_drawable					_widget_area_flags |= FF_Area_Drawable
+#define _widget_clear_drawable					_widget_area_flags &= ~FF_Area_Drawable
+#define _widget_is_bufferize                    ((FF_Area_Bufferize & _widget_area_flags) != 0)
+#define _widget_is_fillable                     ((FF_Area_Fillable & _widget_area_flags) != 0)
+#define _widget_isnt_fillable                   ((FF_Area_Fillable & _widget_area_flags) == 0)
+#define _widget_set_fillable                    _widget_area_flags |= FF_Area_Fillable
+#define _widget_clear_fillable                  _widget_area_flags &= ~FF_Area_Fillable
+
+#define _widget_render                          (_widget_area_public Render)
+#define _widget_app                             (_widget_render->Application)
+#define _widget_win                             (_widget_render->Window)
+#define _widget_display                         (_widget_render->Display)
+#define _widget_rp                              (_widget_render->RPort)
+
+#define _widget_box                             (_widget_area_public Box)
+#define _widget_x                               (_widget_box.x)
+#define _widget_y                               (_widget_box.y)
+#define _widget_w                               (_widget_box.w)
+#define _widget_h                               (_widget_box.h)
+#define _widget_x2                              (_widget_x + _widget_w - 1)
+#define _widget_y2                              (_widget_y + _widget_h - 1)
+
+#define _widget_content                   		(_widget_area_public Content)
+#define _widget_cx                              (_widget_content.x)
+#define _widget_cy                              (_widget_content.y)
+#define _widget_cw                              (_widget_content.w)
+#define _widget_ch                              (_widget_content.h)
+#define _widget_cx2                             (_widget_cx + _widget_cw - 1)
+#define _widget_cy2                             (_widget_cy + _widget_ch - 1)
+
+#define _widget_minmax                          (_widget_area_public MinMax)
+#define _widget_minw                            (_widget_minmax.MinW)
+#define _widget_minh                            (_widget_minmax.MinH)
+#define _widget_maxw                            (_widget_minmax.MaxW)
+#define _widget_maxh                            (_widget_minmax.MaxH)
+
+#define _widget_palette                         (_widget_area_public Palette)
+#define _widget_pens							(_widget_palette->Pens)
+*/
+/* element macros */
+/*
+#define _widget_element_public					_widget_public ElementPublic->
+#define _widget_parent							(_widget_element_public Parent)
+*/
+#endif
 
 /* object generation macros */
 
@@ -1478,7 +1558,7 @@ struct  FS_Window_Depth                         { bool32 Depth; };
 #define FA_Window_Resizable                     (FR_Window_ATTR +  8)
 #define FA_Window_System                        (FR_Window_ATTR +  9)
 
-#warning FA_Window_Resizable is deprecated
+//#warning FA_Window_Resizable is deprecated
 
 /* FIXME-060719:  Since  Window  class  is  now  a  subclass  of  Area,  the
 FA_Window_Resizable   attribute  is  obsolete.  One  can  check  _area_minw,
@@ -1622,6 +1702,7 @@ FWidgetNode;
 #define FC_AdjustSchemeEntry                    "AdjustSchemeEntry"
 #define FC_Balance                              "Balance"
 #define FC_Bar                                  "Bar"
+#define FC_Border                               "Border"
 #define FC_Crawler                              "Crawler"
 #define FC_Cycle                                "Cycle"
 #define FC_Dataspace                            "Dataspace"
@@ -1633,7 +1714,6 @@ FWidgetNode;
 #define FC_FileChooser                          "FileChooser"
 #define FC_FontChooser                          "FontChooser"
 #define FC_FontDialog                           "FontDialog"
-#define FC_Frame                                "Frame"
 #define FC_Histogram                            "Histogram"
 #define FC_Image                                "Image"
 #define FC_Item                                 "Item"
@@ -1687,6 +1767,7 @@ FWidgetNode;
 #define BalanceObject                           IFEELIN F_NewObj(FC_Balance
 #define BalanceID(id)                           IFEELIN F_NewObj(FC_Balance,FA_ID,id,TAG_DONE)
 #define BarObject                               IFEELIN F_NewObj(FC_Bar
+#define BorderObject							IFEELIN F_NewObj(FC_Border
 #define CrawlerObject                           IFEELIN F_NewObj(FC_Crawler
 #define CycleObject                             IFEELIN F_NewObj(FC_Cycle
 #define DataspaceObject                         IFEELIN F_NewObj(FC_Dataspace
@@ -1808,17 +1889,6 @@ enum    {
 		FV_Cycle_Active_First
 
 		};
-
-#ifndef F_NEW_STYLES
-
-enum    {
-
-		FV_Cycle_Layout_Right = 0,
-		FV_Cycle_Layout_Left
-
-		};
-
-#endif
 
 /*** Dialog ************************************************************************************/
 
@@ -1987,7 +2057,7 @@ enum    {
 
 		};
 
-#define F_IS_THREAD_MSG(msg)                    ((uint32)(Thread) == (uint32)(((struct Message *) msg)->mn_Node.ln_Name))
+#define F_IS_THREAD_MSG(msg)                    ((uint32)(Obj) == (uint32)(((struct Message *) msg)->mn_Node.ln_Name))
 
 /***********************************************************************************************/
 

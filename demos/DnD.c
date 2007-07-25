@@ -132,8 +132,8 @@ F_METHODM(uint32,mHandleEvent,FS_Widget_HandleEvent)
 							IDOS_ AddPart(buf,e->wa_Name,1023);
 						}
 
-						IFEELIN F_Log(0,"WBDrop (%s)(0x%08lx)",buf,e->wa_Lock);
-						IDOS_ Printf("WBDrop (%s)(0x%08lx)\n",buf,e->wa_Lock);
+						IFEELIN F_Log(0,"WBDrop (%s)(0x%08lx)", buf, e->wa_Lock);
+						IDOS_ Printf("WBDrop (%s)(0x%08lx)\n", (int32) buf, e->wa_Lock);
 						
 						e++;
 					}
@@ -159,22 +159,31 @@ F_METHODM(uint32,mDnDDrop,FS_Widget_DnDDrop)
 }
 //+
 
+STATIC F_METHODS_ARRAY =
+{
+	F_METHODS_OVERRIDE_STATIC(mNew,         FM_New),
+	F_METHODS_OVERRIDE_STATIC(mSetup,       FM_Element_Setup),
+	F_METHODS_OVERRIDE_STATIC(mCleanup,     FM_Element_Cleanup),
+	F_METHODS_OVERRIDE_STATIC(mHandleEvent, FM_Widget_HandleEvent),
+	F_METHODS_OVERRIDE_STATIC(mDnDDrop,     FM_Widget_DnDDrop),
+
+	F_ARRAY_END
+};
+
+STATIC F_TAGS_ARRAY =
+{
+	F_TAGS_ADD_LOD,
+	F_TAGS_ADD_SUPER(Text),
+	F_TAGS_ADD_METHODS,
+
+	F_ARRAY_END
+};
+
 /// Main
 int main()
 {
 	FClass *cc;
 	FObject app,win,myobj;
-
-	STATIC F_METHODS_ARRAY =
-	{
-		F_METHODS_ADD_STATIC(mNew,         FM_New),
-		F_METHODS_ADD_STATIC(mSetup,       FM_Element_Setup),
-		F_METHODS_ADD_STATIC(mCleanup,     FM_Element_Cleanup),
-		F_METHODS_ADD_STATIC(mHandleEvent, FM_Widget_HandleEvent),
-		F_METHODS_ADD_STATIC(mDnDDrop,     FM_Widget_DnDDrop),
-
-		F_ARRAY_END
-	};
 
 	if (F_FEELIN_OPEN)
 	{
@@ -188,19 +197,13 @@ int main()
 		instance  of  your  custom  class.  This  Name  is unique and made by
 		F_CreateClassA(). */
 
-		cc = IFEELIN F_CreateClass(NULL,
-
-			FA_Class_Super,    FC_Text,
-			FA_Class_LODSize,  sizeof (struct LocalObjectData),
-			FA_Class_Methods,  F_METHODS_PTR,
-			
-			TAG_DONE);
+		cc = IFEELIN F_CreateClassA(NULL, F_TAGS_PTR);
 		
 		if (cc)
 		{
 		   app = AppObject,
 			  Child, win = WindowObject,
-				 FA_Element_ID,            MAKE_ID('M','A','I','N'),
+				 FA_Element_Id, "main",
 				 FA_Window_Title, "Feelin : DnD Demo",
 				 FA_Window_Open,   TRUE,
 

@@ -1,130 +1,96 @@
 #ifndef FEELIN_CONF_H
 #define FEELIN_CONF_H
 
-#define F_NEW_HANDLERS
+#define F_NEW_WIDGET_MODE
 
-/*
+/* 2007/07/10
 
-	Death to embeded structures !!
+New values for the Widget class attribute Mode :
 
-	Using embended structure was easy and quick but TOO dangerous because if
-	an handler (usualy embended in some LOD) was trashed, the whole list was
-	corrupted. For now on, these kind of  handlers  are  private.  They  are
-	created with a taglist, providing flexibility and expandibility.
+	* Button (release)
 
-	FSignalHandler and FEventHandler are now  dead  and  gone.  The  methods
-	formaly used to "add" the handlers also create it now with the help of a
-	taglist.
+		mouse button down or key pressed : Selected = TRUE, Pressed = TRUE
+		mouse button up or key up (after mbd or key down) :
+			* ouside : Selected = FALSE
+			* inside : Selected = FALSE; Pressed = FALSE
 
-	Only an "handle" is returned, which cannot be disposed with  F_Dispose()
-	to limit risks.
+	* Toggle (toggle)
 
-*/
+		mouse button down or key pressed : Selected = (Selected == TRUE) ? FALSE : TRUE
 
-#define F_NEW_TYPES
+	* Touch (immediate)
 
-/*
+		mouse button down or key pressed : Selected = TRUE
 
-	New types and organisation.
-
-*/
-
-/************************************************************************************************
-*** ALIGN ***************************************************************************************
-************************************************************************************************/
-
-#define F_NEW_AREA_ALIGN
-
-/*
-
-	Usualy, if an object in a group was smaller then the available  size  it
-	was  centered.  The new FA_Area_Align attribute can now be used to align
-	objects to the 'start', the 'center'  (default)  or  the  'end'  of  the
-	group:
-
-	|[]    |
-	|  []  |
-	|    []|
+	* Inert (none)
 
 ************************************************************************************************/
 
-/************************************************************************************************
-*** ATOMS ***************************************************************************************
-************************************************************************************************/
 
-#define F_NEW_ATOMS
+#define F_NEW_GETELEMENTBYID
 
-/*
+/* 2007/07/22
 
-	An  *atom  table*  is  a  system  wide  table  that  store  strings.  An
-	application  places  a  string  in an *atom table* and receives a unique
-	structure called an atom, that can be used to access the  string.  Thus,
-	instead  of  comparing  strings,  one  can simply compare the pointer of
-	their atoms.
+The Object class now defines the GetObjectById virtual method, which can  be
+implemented by subclasses.
 
-*/
-
-//#define F_NEW_ATOMS_AMV
-
-/*
-
-	Add atoms to attributes, methods and values.
-
-	>> should be tested more because it  doesn't  seams  to  improve  things
-	much, the dynamic system is already very fast.
+The method is used to retreive an object from an application,  a  family,  a
+group ... by its Id.
 
 ************************************************************************************************/
 
-/************************************************************************************************
-*** ELEMENT *************************************************************************************
-************************************************************************************************/
+#define F_NEW_LISTENERS
 
-#define F_NEW_ELEMENT
+/* 2007/07/20
 
-/*
+Listeners are a new way  of  managing  attributes  modifications.  They  are
+managed  by  the  Object class and are triggered each time an attribute gets
+modified.
 
-	Add the Element class.
+To add a listener on an attribute we  use  the  AddListener  method  on  the
+object which attribute should be listened to :
 
- * SETUP & CLEANUP
+	IFEELIN F_Do(Obj, FM_AddListener, STRPTR attribute_name, struct Hook *call_back, bits32 flags);
 
-	The FM_Setup and FM_Cleanup methods,  renamed  as  FM_Element_Setup  and
-	FM_Element_Cleanup,  are  now implemented by the class, and no longer by
-	the Frame class.
+The  call_back  function  will   be   called   each   time   the   attribute
+'attribute_name' is modified :
 
-	POUR CSS
+struct FS_Object_Listener
+{
+	uint32								Id;
+	uint32								Value;
+	FClassAttribute						*Attribute;
+};
 
+F_HOOKM(uint32, call_back, FS_Object_Listener)
+{
+	return 0;
+}
 
-		deux listes  publiques  :  celle  obtenue  depuis  FC_Preference  en
-		fonction  de  la  classe,  pas  de  copie, on utilise directement le
-		pointeur.
+Because the attribute's id is available in the listerner  message,  one  can
+add multiple listener using a single call_back.
 
-		seconde liste constituée avec les overrides de  FA_Style.  Tous  les
-		FA_Style définis dans la taglist initiale sont pris en compte, et se
-		surchargent.
+***
 
-		>> associer les chaines avec un simple "%s%s" ou la décomposer  pour
-		quelle soit prête.
-
-
-
-************************************************************************************************/
-
-#ifdef F_NEW_ELEMENT
-#define F_NEW_ELEMENT_ID
-#endif
-
-/*
-
-	Move the 'ID' attribute from the Object class to the Element class.  The
-	'ID' was kept in the Object class to reference the application object in
-	XML  application,  which  is   useless   since   the   global   variable
-	'application' can be used instead.
+The purpose of the listerner is to get rid of the CallHook and CallHookEntry
+methods used in former notifications created by the Notify method.
 
 ************************************************************************************************/
 
-#ifdef F_NEW_ELEMENT_ID
+#define F_NEW_WIDGET_PUBLIC
+
+/* 2007/07/10
+
+Add pointers to FElementPublic and FAreaPublic to FWidgetPublic. Thus,  each
+subclass  won't  have  to  waste  space  for them it their local object data
+space.
+
+New macros are now available to use them e.g. _widget_render, _widget_x1, or
+_widget_app...
+
+************************************************************************************************/
+
 //#define F_NEW_APPLICATION_PUBLICIZE
-#endif
 
 /*
 
@@ -307,21 +273,6 @@ on aurait pas à farfouiller dedans.
 [????]
 
 ************************************************************************************************/
-
-#define F_NEW_STYLES_EXTENDED
-
-/*
-
-	* FA_Element_Class and FA_Element_Style are used to create the preference style.
-
-	* FClass is extended for 'local style data' support.
-
-	* the FM_Element_CreateStyle (name under construction) method  is  added
-	to create shared decoded structures.
-
-************************************************************************************************/
-
-
 
 #define F_NEW_ADJUST
 

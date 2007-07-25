@@ -240,34 +240,6 @@ typedef struct FeelinDynamicEntry
 }
 FDynamicEntry;
 
-#ifdef F_NEW_ATOMS_AMV
-
-typedef struct FeelinClassMethod
-{
-	FMethod                         Function;
-	FClassAtom                      CAtom;
-	uint32                          ID;
-}
-FClassMethod;
-
-typedef struct FeelinClassAttributeValue
-{
-	FClassAtom                      CAtom;
-	uint32                          Value;
-}
-FClassAttributeValue;
-
-typedef struct FeelinClassAttribute
-{
-	FClassAtom                      CAtom;
-	uint32                          Type;
-	uint32                          ID;
-	FClassAttributeValue           *Values;
-}
-FClassAttribute;
-
-#else
-
 typedef struct FeelinClassMethod
 {
 	FMethod                         Function;
@@ -291,10 +263,6 @@ typedef struct FeelinClassAttribute
 	FClassAttributeValue           *Values;
 }
 FClassAttribute;
-
-#endif
-
-#ifdef F_NEW_STYLES
 
 typedef struct FeelinClassProperty
 {
@@ -303,8 +271,6 @@ typedef struct FeelinClassProperty
 	FClassAttributeValue           *Values;
 }
 FClassProperty;
-
-#endif
 
 typedef struct FeelinClass
 {
@@ -320,18 +286,12 @@ typedef struct FeelinClass
 	APTR                            UserData;
 	uint32                          UserCount;
 
-	#ifdef F_NEW_STYLES_EXTENDED
 	uint16                          PropertiesOffset;
 	uint32                          PropertiesLocalSize;
-	#endif
 
 	FClassMethod                   *Methods;
 	FClassAttribute                *Attributes;
-
-	#ifdef F_NEW_STYLES
 	FClassProperty                 *Properties;
-	#endif
-
 	FDynamicEntry                  *Resolveds;
 	FDynamicEntry                  *Autos;
 
@@ -373,6 +333,11 @@ typedef struct FeelinThreadPublic
 	uint32                          id_Wait;
 }
 FThreadPublic;
+
+struct FS_Thread_Run
+{
+	FThreadPublic				   *Public;
+};
 
 /*** Display ***********************************************************************************/
 

@@ -54,12 +54,12 @@ F_METHOD(uint32,mDraw)
 //+
 
 /// Main
-int32 main(void)
+int main(void)
 {
 	STATIC F_METHODS_ARRAY =
 	{
-		F_METHODS_ADD_STATIC(mNew,         FM_New),
-		F_METHODS_ADD_STATIC(mDraw,        FM_Area_Draw),
+		F_METHODS_OVERRIDE_STATIC(mNew, FM_New),
+		F_METHODS_OVERRIDE_STATIC(mDraw, FM_Area_Draw),
 
 		F_ARRAY_END
 	};
@@ -91,7 +91,11 @@ int32 main(void)
 							
 							FA_Element_Class,       "button",
 							FA_Widget_SetMax,       FV_Widget_SetHeight,
+							#ifdef F_NEW_WIDGET_MODE
+							FA_Widget_Mode,         FV_Widget_Mode_Button,
+							#else
 							FA_Widget_Mode,         FV_Widget_Mode_Release,
+							#endif
 							FA_Text_Contents,       "let's play !",
 							FA_Text_PreParse,       "<align=center>",
 
@@ -101,7 +105,11 @@ int32 main(void)
 
 							FA_Element_Class,       "button",
 							FA_Widget_SetMax,       FV_Widget_SetHeight,
+							#ifdef F_NEW_WIDGET_MODE
+							FA_Widget_Mode,         FV_Widget_Mode_Button,
+							#else
 							FA_Widget_Mode,         FV_Widget_Mode_Release,
+							#endif
 							FA_Text_Contents,       "let's play !",
 							FA_Text_PreParse,       "<align=center>",
 

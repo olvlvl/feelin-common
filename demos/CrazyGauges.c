@@ -193,10 +193,10 @@ F_METHODM(ULONG,Crazy_HandleEvent,FS_Widget_HandleEvent)
 
 STATIC F_METHODS_ARRAY =
 {
-	F_METHODS_ADD_STATIC(Crazy_New, FM_New),
-	F_METHODS_ADD_STATIC(Crazy_Setup, FM_Element_Setup),
-	F_METHODS_ADD_STATIC(Crazy_Cleanup, FM_Element_Cleanup),
-	F_METHODS_ADD_STATIC(Crazy_HandleEvent, FM_Widget_HandleEvent),
+	F_METHODS_OVERRIDE_STATIC(Crazy_New, FM_New),
+	F_METHODS_OVERRIDE_STATIC(Crazy_Setup, FM_Element_Setup),
+	F_METHODS_OVERRIDE_STATIC(Crazy_Cleanup, FM_Element_Cleanup),
+	F_METHODS_OVERRIDE_STATIC(Crazy_HandleEvent, FM_Widget_HandleEvent),
 
 	F_ARRAY_END
 };
@@ -234,7 +234,7 @@ int main()
 				FA_Application_Base,         "CRAZYGAUGES",
 
 				Child, win = WindowObject,
-					FA_Element_ID, "win",
+					FA_Element_Id, "win",
 					FA_Element_Persist, "width height",
 					FA_Window_Title,  "Feelin : Gauges",
 					FA_Window_Open,   TRUE,
@@ -249,7 +249,7 @@ int main()
 								Child, Crazy(TRUE,0,100,0,"Crazy"),
 							End,
 
-							Child, bal = BalanceObject, FA_Element_ID, "balance", FA_Element_Persist, "weights", End,
+							Child, bal = BalanceObject, FA_Element_Id, "balance", FA_Element_Persist, "weights", End,
 
 							Child, VGroup, FA_Widget_SetMax,FV_Widget_SetHeight,
 								Child, Crazy(TRUE,0,100,  0,"TwoWays"),

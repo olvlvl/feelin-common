@@ -1,4 +1,5 @@
 FElementPublic
+FListenerTrigger
 FS_Area_SetState
 bits16
 bits32
@@ -68,6 +69,7 @@ FS_Element_Setup
 FS_RemMember
 FS_Widget_HandleEvent
 FS_Widget_ModifyEvents
+FS_Element_GlobalConnect
 FThreadMsg
 FWidgetData
 FXMLAttribute

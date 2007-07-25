@@ -3,6 +3,15 @@
 
 	2000-2005 © Olivier LAVIALE <gofromiel@gofromiel.com>
 
+*************************************************************************************************
+
+$VER: (01.10) 2006/12/10
+
+	The assignation path is now enclosed with quotes, allowing spaces in the
+	path (e.g. "RAM DISK:").
+
+	All references to the "Fonts" folder are disabled for now on.
+
 */
 
 /************************************************************************************************
@@ -36,6 +45,7 @@ struct FeelinIFace                 *IFeelin;
 //#define F_ENABLE_FORCE_THEME
 //#define F_ENABLE_FORCE_DEFAULT
 //#define F_ENABLE_GO_DELAY
+//#define F_ENABLE_FEELIN_FONTS
 
 #define F_ENABLE_LICENCE
 #define F_ENABLE_PREFERENCES
@@ -49,11 +59,15 @@ BPTR lock_feelin_previous = 0;
 BPTR lock_feelin_new = 0;
 BPTR lock_feelin_libs = 0;
 BPTR lock_feelin_locale = 0;
+#ifdef F_ENABLE_FEELIN_FONTS
 BPTR lock_feelin_fonts = 0;
+#endif
 uint32 assign_feelin_new = 0;
 uint32 assign_feelin_libs = 0;
 uint32 assign_feelin_locale = 0;
+#ifdef F_ENABLE_FEELIN_FONTS
 uint32 assign_feelin_fonts = 0;
+#endif
 uint32 launch_preference_editor = FALSE;
 
 ///typedefs
@@ -527,10 +541,15 @@ STATIC void installer_modify_startup(void)
 					IDOS_ NameFromLock(lock_feelin_new, buf, 1024);
 
 					IDOS_ FPrintf(out, "\n" F_STARTUP_MARKUP_BEGIN "\n");
-					IDOS_ FPrintf(out, "Assign >NIL: Feelin: %s\n", (int32) buf);
+
+					IDOS_ FPrintf(out, "Assign >NIL: Feelin: \"%s\"\n", (int32) buf);
 					IDOS_ FPrintf(out, "Assign >NIL: LIBS: ADD Feelin:LIBS\n");
 					IDOS_ FPrintf(out, "Assign >NIL: Locale: ADD Feelin:Locale\n");
+
+					#ifdef F_ENABLE_FEELIN_FONTS
 					IDOS_ FPrintf(out, "Assign >NIL: FONTS: ADD Feelin:Fonts\n");
+					#endif
+
 					IDOS_ FPrintf(out, "Path ADD Feelin:Tools\n");
 					IDOS_ FPrintf(out, F_STARTUP_MARKUP_END "\n");
 
@@ -599,12 +618,63 @@ F_METHOD(FObject,Installer_New)
 		
 		End;
 
-	LOD->xmltags = (struct TagItem *) IFEELIN F_Get(LOD->xmlobject,(uint32) "FA_XMLObject_Tags");
+	LOD->xmltags = (struct TagItem *) IFEELIN F_Get(LOD->xmlobject,(uint32) "Tags");
  
 	if ((LOD->xmlobject == NULL) || (LOD->xmltags == NULL))
 	{
 		return NULL;
 	}
+
+	#ifdef F_NEW_GETELEMENTBYID
+	{
+		struct element_item
+		{
+			STRPTR Id;
+			FObject *ObjectPtr;
+		};
+
+		struct element_item ar[] =
+		{
+			{ "banner",						  &LOD->banner },
+			{ "banner.text",                  &LOD->banner_text },
+			{ "pages.welcome",                &LOD->pages[FV_PAGE_WELCOME] },
+
+			#ifdef F_ENABLE_LICENCE
+			{ "pages.licence",				  &LOD->pages[FV_PAGE_LICENCE] },
+			#endif
+
+			#ifdef F_ENABLE_PREFERENCES
+			{ "pages.preferences",            &LOD->pages[FV_PAGE_PREFERENCES] },
+			#endif
+
+			{ "pages.preferences.theme",	  &LOD->preferences_theme },
+			{ "pages.preferences.editor",	  &LOD->preferences_editor },
+
+			#ifdef F_ENABLE_STARTUP
+			{ "pages.startup",				  &LOD->pages[FV_PAGE_STARTUP] },
+			#endif
+
+			{ "pages.startup.modify",		  &LOD->startup_modify },
+			{ "pages.resume",				  &LOD->pages[FV_PAGE_RESUME] },
+			{ "pages.resume.theme",			  &LOD->resume_theme },
+			{ "pages.resume.editor",          &LOD->resume_editor },
+			{ "pages.resume.startup",         &LOD->resume_startup },
+			{ "pages.progress",               &LOD->pages[FV_PAGE_PROGRESS] },
+			{ "pages.progress.text", 		  &LOD->progress_text },
+			{ "pages.progress.gauge",         &LOD->progress_gauge },
+			{ "pages.done",					  &LOD->pages[FV_PAGE_DONE] },
+
+			F_ARRAY_END
+		};
+
+		struct element_item *item;
+
+		for ( item = ar ; item->Id ; item++)
+		{
+			*item->ObjectPtr = (FObject) IFEELIN F_Do(LOD->xmlobject, FM_GetElementById, item->Id);
+		}
+	}
+	#else
 
 	IFEELIN F_Do(LOD->xmlobject, (uint32) "GetObjects",
 
@@ -639,9 +709,12 @@ F_METHOD(FObject,Installer_New)
 
 		NULL);
 
+	#endif
+
 	if (IFEELIN F_SuperDo(Class,Obj,Method,
 		
 		FA_Element_Style, "border-frame: none; padding: 0px; background: url(feelin:resources/install/back.png) bottom right fill no-repeat",
+//		  FA_Element_Style, "border-frame: none; padding: 0px;",
 //		  FA_Area_Bufferize, TRUE,
 	
 		Child, LOD->root = VGroup,
@@ -739,7 +812,9 @@ F_METHOD(FObject,Installer_New)
 			Obj, FM_Set, 2, F_ATTRIBUTE_ID(THEME), FV_Notify_Value
 		);
 
-/*** ***/
+		//
+		// init
+		//
 
 		IFEELIN F_Set(Obj, F_ATTRIBUTE_ID(ACTIVEPAGE), 1);
 
@@ -847,12 +922,12 @@ F_METHOD(uint32,Installer_Set)
  
 				if (n < 2)
 				{
-					if (IFEELIN F_Get(LOD->banner, FA_Parent))
+					if (IFEELIN F_Get(LOD->banner, FA_Element_Parent))
 					{
 						IFEELIN F_Do(LOD->master, FM_RemMember, LOD->banner);
 					}
 				}
-				else if (IFEELIN F_Get(LOD->banner, FA_Parent) == 0)
+				else if (IFEELIN F_Get(LOD->banner, FA_Element_Parent) == 0)
 				{
 					IFEELIN F_Do(LOD->master, FM_AddMember, LOD->banner, FV_AddMember_Tail);
 				}
@@ -1033,7 +1108,15 @@ F_METHODM(void,Installer_Go,FS_Installer_Go)
 		{
 			FObject btn_done = NULL;
 
+			#ifdef F_NEW_GETELEMENTBYID
+
+			btn_done = (FObject) IFEELIN F_Do(LOD->xmlobject, FM_GetElementById, "done.ok");
+
+			#else
+
 			IFEELIN F_Do(LOD->xmlobject, (uint32) "GetObjects", "done.ok", &btn_done, NULL);
+
+			#endif
  
 			#ifdef DB_GO
 			IFEELIN F_Log(0,"step: begin. btn_done (0x%08lx)", btn_done);
@@ -1172,16 +1255,52 @@ int main(void)
 {
 	BPTR lock;
 	
-	lock_feelin_previous = IDOS_ Lock("Feelin:", SHARED_LOCK);
-	lock_feelin_new = IDOS_ GetProgramDir();
+/** env directories *****************************************************************************
 				
-	if (lock_feelin_new)
+	If it doesn't exists, we create the "Feelin" directory in both ENV:  and
+	ENVARC:.
+
+*/
+
+	lock = IDOS_ Lock("ENV:Feelin", SHARED_LOCK);
+
+	if (lock)
 	{
-		lock_feelin_new = IDOS_ DupLock(lock_feelin_new);
+		IDOS_ UnLock(lock);
 	}
 	else
 	{
-		return 0;
+		lock = IDOS_ CreateDir("ENV:Feelin");
+
+		if (lock)
+		{
+			IDOS_ UnLock(lock);
+		}
+		else
+		{
+			IDOS_ Printf("Unable to create the 'ENV:Feelin' directory\n");
+		}
+	}
+ 
+
+	lock = IDOS_ Lock("ENVARC:Feelin", SHARED_LOCK);
+
+	if (lock)
+	{
+		IDOS_ UnLock(lock);
+	}
+	else
+	{
+		lock = IDOS_ CreateDir("ENVARC:Feelin");
+
+		if (lock)
+		{
+			IDOS_ UnLock(lock);
+		}
+		else
+		{
+			IDOS_ Printf("Unable to create the 'ENVARC:Feelin' directory\n");
+		}
 	}
  
 /** remove "Feelin:" ****************************************************************************
@@ -1195,6 +1314,18 @@ int main(void)
 	'Feelin' directory in the same parent folder.
  
 */
+ 
+	lock_feelin_previous = IDOS_ Lock("Feelin:", SHARED_LOCK);
+	lock_feelin_new = IDOS_ GetProgramDir();
+
+	if (lock_feelin_new)
+	{
+		lock_feelin_new = IDOS_ DupLock(lock_feelin_new);
+	}
+	else
+	{
+		return 0;
+	}
  
 	if (lock_feelin_previous)
 	{
@@ -1244,7 +1375,9 @@ int main(void)
 			#endif
 		}
 	
-		/* remove 'Feelin:Fonts' from 'FONTS' */
+		#ifdef F_ENABLE_FEELIN_FONTS
+
+		/* remove 'Feelin:Fonts' from 'FONTS:' */
 		
 		lock = IDOS_ Lock("Feelin:Fonts", SHARED_LOCK);
 		
@@ -1262,6 +1395,8 @@ int main(void)
  
 			#endif
 		}
+		
+		#endif
 		
 		/* finaly remove 'Feelin:' */
  
@@ -1308,12 +1443,16 @@ int main(void)
 				assign_feelin_locale = IDOS_ AssignAdd("Locale", lock_feelin_locale);
 			}
 
+			#ifdef F_ENABLE_FEELIN_FONTS
+
 			lock_feelin_fonts = IDOS_ Lock("Feelin:Fonts", SHARED_LOCK);
 			
 			if (lock_feelin_fonts)
 			{
 				assign_feelin_fonts = IDOS_ AssignAdd("FONTS", lock_feelin_fonts);
 			}
+
+			#endif
 		}
 	}
 
@@ -1418,13 +1557,13 @@ int main(void)
 			F_METHODS_ADD(Installer_Copy, "Copy"),
 			F_METHODS_ADD(Installer_Go, "Go"),
 			
-			F_METHODS_ADD_STATIC(Installer_New, FM_New),
-			F_METHODS_ADD_STATIC(Installer_Dispose, FM_Dispose),
-			F_METHODS_ADD_STATIC(Installer_Set, FM_Set),
-			F_METHODS_ADD_STATIC(Installer_Get, FM_Get),
+			F_METHODS_OVERRIDE_STATIC(Installer_New, FM_New),
+			F_METHODS_OVERRIDE_STATIC(Installer_Dispose, FM_Dispose),
+			F_METHODS_OVERRIDE_STATIC(Installer_Set, FM_Set),
+			F_METHODS_OVERRIDE_STATIC(Installer_Get, FM_Get),
 			#ifndef F_NEW_GLOBALCONNECT
-			F_METHODS_ADD_STATIC(Installer_Connect, FM_Connect),
-			F_METHODS_ADD_STATIC(Installer_Disconnect, FM_Disconnect),
+			F_METHODS_OVERRIDE_STATIC(Installer_Connect, FM_Connect),
+			F_METHODS_OVERRIDE_STATIC(Installer_Disconnect, FM_Disconnect),
 			#endif
 			
 			F_ARRAY_END
@@ -1444,10 +1583,10 @@ int main(void)
 		{
 			FObject app,win;
 
-			app = AppObject,
+			app = ApplicationObject,
 				
 				FA_Application_Title, "FInstaller",
-				FA_Application_Version, "$VER: FInstaller 01.00 (2005/01/04",
+				FA_Application_Version, "$VER: FInstaller 01.00 (2006/01/04)",
 				FA_Application_Copyright, "© 2001-2006 Olivier LAVIALE",
 				FA_Application_Author, "Olivier LAVIALE - gofromiel@gofromiel.com",
 				FA_Application_Description, "Setup Feelin",
@@ -1483,7 +1622,7 @@ int main(void)
 	}
 	else
 	{
-		IDOS_ Printf("unable to open %s v%ld\n", "feelin.library", FV_FEELIN_VERSION);
+		IDOS_ Printf("unable to open %s v%ld\n", (int32) "feelin.library", FV_FEELIN_VERSION);
 	}
 	
 /** free resources *****************************************************************************/
@@ -1508,10 +1647,14 @@ int main(void)
 		IDOS_ UnLock(lock_feelin_locale);
 	}
 
+	#ifdef F_ENABLE_FEELIN_FONTS
+
 	if (assign_feelin_fonts == 0 && lock_feelin_fonts != NULL)
 	{
 		IDOS_ UnLock(lock_feelin_fonts);
 	}
+
+	#endif
 
 	IDOS_ DeleteFile("ENV:Feelin/global.bak");
  

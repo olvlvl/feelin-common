@@ -2,30 +2,30 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Pictures" Open="true">
+		<Window Id="win" Title="Pictures" Open="true">
 			<Group Orientation="vertical">
-				<Group class="box" Caption="Alpha support">
+				<Group Class="box" Caption="Alpha support">
 					<Image Chainable="false" Spec="url(button.png)" />
-					<Image Chainable="false" Spec="url(button.png)" style="background: red" />
-					<Image Chainable="false" Spec="url(button.png)" style="background: red blue oblique large" />
-					<Image Chainable="false" Spec="url(button.png)" style="background: red blue 315°" />
+					<Image Chainable="false" Spec="url(button.png)" Style="background: red" />
+					<Image Chainable="false" Spec="url(button.png)" Style="background: red blue oblique large" />
+					<Image Chainable="false" Spec="url(button.png)" Style="background: red blue 315°" />
 				</Group>
 
-				<Group class="box" Caption="Sub pictures" Orientation="vertical" style="width: auto; height: auto">
+				<Group Class="box" Caption="Sub pictures" Orientation="vertical" Style="width: auto; height: auto">
 
 					<Group>
 						<Group Columns="2">
 		                	<HLabel Align="end">Pressed</HLabel>
-							<Checkbox id="check-pressed" />
+							<Checkbox Id="check-pressed" />
 			                <HLabel Align="end">Active</HLabel>
-							<Checkbox id="check-active" />
+							<Checkbox Id="check-active" />
 				            <HLabel Align="end">Disabled</HLabel>
-							<Checkbox id="check-disabled" />
+							<Checkbox Id="check-disabled" />
 						</Group>
 
 						<Bar />
 
-						<Image id="button" Mode="release" Spec="url(button-multiple.png) multiple" />
+						<Image Id="button" Mode="button" Spec="url(button-multiple.png) multiple" />
 					</Group>
 
 					<Bar Title="source" />

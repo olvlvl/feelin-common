@@ -33,7 +33,7 @@ FA_Class_AutoResolveTable
 FA_Class_CatalogName
 FA_Class_CatalogTable
 FA_Class_Dispatcher
-FA_Class_LODSize
+FA_Class_LocalSize
 FA_Class_Methods
 FA_Class_Module
 FA_Class_Name
@@ -50,7 +50,7 @@ FA_Element_Application
 FA_Element_Class
 FA_Element_ComposedStyle
 FA_Element_DecodedStyle
-FA_Parent
+FA_Element_Parent
 FA_Element_Persist
 FA_Element_Style
 FA_Element_Window
@@ -76,7 +76,7 @@ FA_Group_SameSize
 FA_Group_SameWidth
 FA_Group_Virtual
 FA_Group_VSpacing
-FA_Element_ID
+FA_Element_Id
 FA_ImageDisplay_Height
 FA_ImageDisplay_Mask
 FA_ImageDisplay_Origin

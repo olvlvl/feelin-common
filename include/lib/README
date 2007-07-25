@@ -9,8 +9,8 @@ issues.
 
 
 
-feelin_68k_sasc
----------------
+feelin_68k.lib
+--------------
 
 This library is created by the 'makefile.68k.sasc' makefile.  Because  SAS/C
 handles  Amiga  library  calls,  there  is  no  stubs in the library. Still,

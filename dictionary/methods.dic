@@ -1,8 +1,9 @@
+FM_AddListener
+FM_RemoveListener
+FM_GetElementById
 FM_Connect
 FM_Disconnect
 FM_AddMember
-FM_AddObjectForID
-FM_Application_AddObjectID
 FM_Application_AddStyleSheet
 FM_Application_Awake
 FM_Application_Cleanup

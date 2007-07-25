@@ -2,13 +2,13 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Widget : Align" Open="true" Width="200px">
+		<Window Id="win" Title="Widget : Align" Open="true" Width="200px">
 			<Group Orientation="vertical">
-				<Widget style="background: red; min-height: 5px;" />
-				<Button Align="start" style="width: auto;">start</Button>
-				<Button Align="center" style="width: auto;">center</Button>
-				<Button Align="end" style="width: auto;">end</Button>
-				<Widget style="background: red; min-height: 5px;" />
+				<Widget Style="background: red; min-height: 5px;" />
+				<Button Align="start" Style="width: auto;">start</Button>
+				<Button Align="center" Style="width: auto;">center</Button>
+				<Button Align="end" Style="width: auto;">end</Button>
+				<Widget Style="background: red; min-height: 5px;" />
 			</Group>
 	  	</Window>
    </Application>

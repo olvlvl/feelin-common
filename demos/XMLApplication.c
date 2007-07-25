@@ -17,7 +17,7 @@ struct FeelinIFace *IFeelin;
 struct FeelinBase *FeelinBase;
 extern struct WBStartup *_WBenchMsg;
 
-int32 main()
+int main()
 {
 	if (F_FEELIN_OPEN)
 	{
@@ -30,7 +30,7 @@ int32 main()
 
 			//IFEELIN F_Log(0,"WB 0x%08lx - Num %ld - List 0x%08lx",_WBenchMsg,narg,arg);
 
-			if (file = IFEELIN F_New(1024))
+			if ((file = IFEELIN F_New(1024)) != NULL)
 			{
 				while (narg--)
 				{
@@ -46,9 +46,9 @@ int32 main()
 		else
 		{
 			uint32 args[] = { (uint32)("Hello.xml"), 0};
-			APTR rdargs;
+			APTR rdargs = IDOS_ ReadArgs("SRC=SOURCE",(int32 *)(&args),NULL);
 		  
-			if (rdargs = IDOS_ ReadArgs("SRC=SOURCE",(int32 *)(&args),NULL))
+			if (rdargs)
 			{
 				IDOS_ FreeArgs(rdargs);
 			}

@@ -1,19 +1,35 @@
-# create all executables
+#
+#  Use this makefile to create feelin.library
+#
 
-all : Alpha Class1 Class2 \
-		ColorCube CrazyGauges Dialog DnD fonts \
-		FWidgetPublic Gradient Lines Listview \
-		SignalHandler Strings Thread XMLApplication
+include feelin:_make/makefile-header
+
+OBJECTS := \
+	Class1 \
+	Class2 \
+	ColorCube \
+	CrazyGauges \
+	Dialog \
+	DnD \
+	dosnotify \
+	FWidgetPublic \
+	lines \
+	listview \
+	SignalHandler \
+	Strings \
+	thread \
+	timer \
+	XMLApplication
+
+all : $(OBJECTS)
+
+#
+#
+#
 
 % : %.c
-	SC $<
-	@ delete quiet *.(o|lnk)
-#    vc $< -o $@ -IFeelin:Include -LFeelin:Include/lib -lfeelin
+	@ echo ">>"[1m$(@F)[0m
+	@ $(COMPILER) $(COMPILER_OPTIONS) $(COMPILER_OBJECT) $@ $(COMPILER_SOURCE) $^ $(LINKER_OPTIONS) $(LINKER_LIBS)
 
 clean :
-
-	Delete QUIET *.(o|lnk)
-
-delete :
-
-	Delete QUIET ~(*.e|*.c|*.xml|*.css|*.info|*makefile*|scoptions)
+	delete quiet $(OBJECTS)

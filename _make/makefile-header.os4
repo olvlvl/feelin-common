@@ -1,0 +1,48 @@
+#
+# makefile header to compile Feelin classes
+#
+
+# platform
+
+export PLATFORM := os4
+
+# common
+
+export SRC  := /Feelin/Sources
+export DST  := /Feelin/Libs/Feelin
+export CATS := /Feelin/Locale/Catalogs/Français
+export EXT  := fc
+
+# compiler
+
+export COMPILER := gcc
+export COMPILER_OPTIONS := -c -noixemul -Wall -mcrt=clib2 -O2 -D__USE_BASETYPE__ -DF_USE_PICASSO96 -I. -I/Feelin/Include
+
+# linker
+
+export LINKER := gcc
+export LINKER_OPTIONS := -L/Feelin/Include/lib
+#export LINKER_OPTIONS += -Wl,-Map=T:map ## create a map of symbols
+#export LINKER_OPTIONS += -s ## remove all symbols
+export LINKER_CLASSES_OPTIONS := -noixemul -nostartfiles -mcrt=clib2
+export LINKER_LIBS := -lamiga -lfeelin_$(PLATFORM)
+export LINKER_OUTPUT := -o
+
+# flush
+
+export FLUSH := Avail >NIL: FLUSH
+
+# create
+
+%.o : %.c
+	@ echo ">>[1m$(<F)[0m $(COMPILER) $(COMPILER_OPTIONS) $<"
+	@ $(COMPILER) $(COMPILER_OPTIONS) $(COMPILER_CLASS_OPTIONS) $(COMPILER_OBJECT) $@ $<
+
+#%.gch : %
+#	 @ echo ">>[2mPrecompiled header [1m$(<F)[0m $(COMPILER) $(COMPILER_OPTIONS) $<"
+#	 @ $(COMPILER) $(COMPILER_OPTIONS) $<
+
+#/feelin/include/lib/libSAS_func_OS4.a :
+#	Why do i have to specify the make command path ?????
+#	 @ SDK:C/make --no-print-directory --directory=/Feelin/sources/_support --file=makefile.os4.gcc $(ACTION)
+

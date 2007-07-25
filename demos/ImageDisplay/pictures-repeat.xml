@@ -4,17 +4,17 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Pictures : Repeat" Open="true">
+		<Window Id="win" Title="Pictures : Repeat" Open="true">
 			<Group Rows="2" Orientation="vertical">
-				<Image class="picture-box" SetMax="none" Spec="url(button.png) center" />
-				<Image class="picture-box" SetMax="none" Spec="url(button.png) left center repeat-x" />
-				<Image class="picture-box" SetMax="none" Spec="url(button.png) top center repeat-y" />
+				<Image Class="picture-box" SetMax="none" Spec="url(button.png) center" />
+				<Image Class="picture-box" SetMax="none" Spec="url(button.png) left center repeat-x" />
+				<Image Class="picture-box" SetMax="none" Spec="url(button.png) top center repeat-y" />
 
 				<Group Rows="2" Orientation="vertical">
-					<Image class="picture-box" SetMax="none" Spec="url(button.png) top left" />
-					<Image class="picture-box" SetMax="none" Spec="url(button.png) top right" />
-					<Image class="picture-box" SetMax="none" Spec="url(button.png) bottom left" />
-					<Image class="picture-box" SetMax="none" Spec="url(button.png) bottom right" />
+					<Image Class="picture-box" SetMax="none" Spec="url(button.png) top left" />
+					<Image Class="picture-box" SetMax="none" Spec="url(button.png) top right" />
+					<Image Class="picture-box" SetMax="none" Spec="url(button.png) bottom left" />
+					<Image Class="picture-box" SetMax="none" Spec="url(button.png) bottom right" />
 				</Group>
 			</Group>
 		</Window>

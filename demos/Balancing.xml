@@ -12,34 +12,34 @@
 		Description="Show balancing groups"
 		Base="BALANCING">
 
-		<Window id="win" Title="Feelin : Balancing" Open="true" Persist="width height">
+		<Window Id="win" Title="Feelin : Balancing" Open="true" Persist="width height">
 
-			<vbox id="g">
-				<hbox style="font: &font;;">
-					<Text Contents="Red" style="background: red;" VCenter="true" HCenter="true"/>
-					<Text Contents="Yellow" style="background: yellow;" VCenter="true" HCenter="true"/>
-					<Balance id="balance1" Persist="weights" />
+			<vbox Id="g">
+				<hbox Style="font: &font;;">
+					<Text Contents="Red" Style="background: red;" VCenter="true" HCenter="true"/>
+					<Text Contents="Yellow" Style="background: yellow;" VCenter="true" HCenter="true"/>
+					<Balance Id="balance1" Persist="weights" />
 
-					<Text Contents="Lime" style="background: lime;" VCenter="true" HCenter="true" SetMax="both" />
-					<Text Contents="Aqua" style="background: aqua;" VCenter="true" HCenter="true"/>
-					<Text Contents="Blue" style="background: blue;" VCenter="true" HCenter="true"/>
+					<Text Contents="Lime" Style="background: lime;" VCenter="true" HCenter="true" SetMax="both" />
+					<Text Contents="Aqua" Style="background: aqua;" VCenter="true" HCenter="true"/>
+					<Text Contents="Blue" Style="background: blue;" VCenter="true" HCenter="true"/>
 				</hbox>
 
-				<Balance id="balance2" Persist="weights"/>
+				<Balance Id="balance2" Persist="weights"/>
 
-				<hbox style="font: &font;; max-width: 300px;">
-					<Text Contents="White" style="background: white; scheme: &lt;scheme text='black' /&gt;" VCenter="true" HCenter="true"/>
-					<Balance id="balance3" Persist="weights" />
-					<Text Contents="Black" style="background: black; scheme: &lt;scheme text='white' /&gt;" VCenter="true" HCenter="true"/>
+				<hbox Style="font: &font;; max-width: 300px;">
+					<Text Contents="White" Style="background: white; scheme: &lt;scheme text='black' /&gt;" VCenter="true" HCenter="true"/>
+					<Balance Id="balance3" Persist="weights" />
+					<Text Contents="Black" Style="background: black; scheme: &lt;scheme text='white' /&gt;" VCenter="true" HCenter="true"/>
 				</hbox>
 
-				<Text Contents="Fuchsia" style="background: fuchsia; font: &font;;" VCenter="true" HCenter="true"/>
+				<Text Contents="Fuchsia" Style="background: fuchsia; font: &font;;" VCenter="true" HCenter="true"/>
 
 				<Bar />
 
 				<hbox>
 					<HLabel>Quick Balance</HLabel>
-					<Checkbox id="b">false</Checkbox>
+					<Checkbox Id="b">false</Checkbox>
 				</hbox>
 			</vbox>
 		</Window>

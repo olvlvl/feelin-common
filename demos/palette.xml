@@ -4,92 +4,92 @@
 
 <feelin:application>
 	<Application>
-	  	<Window id="win" Title="Palette" Open="true">
+	  	<Window Id="win" Title="Palette" Open="true">
 
 			<Group Orientation="vertical">
-				<Group class="box" Caption="palette-contrast">
-					<Button style="palette-contrast: -100%">-100%</Button>
-					<Button style="palette-contrast: -75%">-75%</Button>
-					<Button style="palette-contrast: -50%">-50%</Button>
-					<Button style="palette-contrast: -25%">-25%</Button>
-					<Button style="palette-contrast: 0%">0%</Button>
-					<Button style="palette-contrast: 25%">25%</Button>
-					<Button style="palette-contrast: 50%">50%</Button>
-					<Button style="palette-contrast: 75%">75%</Button>
-					<Button style="palette-contrast: 100%">100%</Button>
+				<Group Class="box" Caption="palette-contrast">
+					<Button Style="palette-contrast: -100%">-100%</Button>
+					<Button Style="palette-contrast: -75%">-75%</Button>
+					<Button Style="palette-contrast: -50%">-50%</Button>
+					<Button Style="palette-contrast: -25%">-25%</Button>
+					<Button Style="palette-contrast: 0%">0%</Button>
+					<Button Style="palette-contrast: 25%">25%</Button>
+					<Button Style="palette-contrast: 50%">50%</Button>
+					<Button Style="palette-contrast: 75%">75%</Button>
+					<Button Style="palette-contrast: 100%">100%</Button>
 				</Group>
 
-				<Group class="box" Caption="palette-luminance" Rows="2">
-					<Button style="palette-luminance: -100%">-100%</Button>
-					<Button style="palette-luminance: -75%">-75%</Button>
-					<Button style="palette-luminance: -50%">-50%</Button>
-					<Button style="palette-luminance: -25%">-25%</Button>
-					<Button style="palette-luminance: 0%">0%</Button>
-					<Button style="palette-luminance: 25%">25%</Button>
-					<Button style="palette-luminance: 50%">50%</Button>
-					<Button style="palette-luminance: 75%">75%</Button>
-					<Button style="palette-luminance: 100%">100%</Button>
+				<Group Class="box" Caption="palette-luminance" Rows="2">
+					<Button Style="palette-luminance: -100%">-100%</Button>
+					<Button Style="palette-luminance: -75%">-75%</Button>
+					<Button Style="palette-luminance: -50%">-50%</Button>
+					<Button Style="palette-luminance: -25%">-25%</Button>
+					<Button Style="palette-luminance: 0%">0%</Button>
+					<Button Style="palette-luminance: 25%">25%</Button>
+					<Button Style="palette-luminance: 50%">50%</Button>
+					<Button Style="palette-luminance: 75%">75%</Button>
+					<Button Style="palette-luminance: 100%">100%</Button>
 
-					<Widget class="greybox" style="palette-luminance: -100%">-100%</Widget>
-					<Widget class="greybox" style="palette-luminance: -75%">-75%</Widget>
-					<Widget class="greybox" style="palette-luminance: -50%">-50%</Widget>
-					<Widget class="greybox" style="palette-luminance: -25%">-25%</Widget>
-					<Widget class="greybox" style="palette-luminance: 0%">0%</Widget>
-					<Widget class="greybox" style="palette-luminance: 25%">25%</Widget>
-					<Widget class="greybox" style="palette-luminance: 50%">50%</Widget>
-					<Widget class="greybox" style="palette-luminance: 75%">75%</Widget>
-					<Widget class="greybox" style="palette-luminance: 100%">100%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: -100%">-100%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: -75%">-75%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: -50%">-50%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: -25%">-25%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: 0%">0%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: 25%">25%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: 50%">50%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: 75%">75%</Widget>
+					<Widget Class="greybox" Style="palette-luminance: 100%">100%</Widget>
 				</Group>
 
-				<!--Group class="box" Caption="palette-saturation" Rows="2">
-					<Button style="palette-fill: fuchsia; palette-saturation: -100%">-100%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: -75%">-75%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: -50%">-50%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: -25%">-25%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: 0%">0%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: 25%">25%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: 50%">50%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: 75%">75%</Button>
-					<Button style="palette-fill: fuchsia; palette-saturation: 100%">100%</Button>
+				<!--Group Class="box" Caption="palette-saturation" Rows="2">
+					<Button Style="palette-fill: fuchsia; palette-saturation: -100%">-100%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: -75%">-75%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: -50%">-50%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: -25%">-25%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: 0%">0%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: 25%">25%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: 50%">50%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: 75%">75%</Button>
+					<Button Style="palette-fill: fuchsia; palette-saturation: 100%">100%</Button>
 
-					<Widget class="purplebox" style="palette-saturation: -100%">-100%</Widget>
-					<Widget class="purplebox" style="palette-saturation: -75%">-75%</Widget>
-					<Widget class="purplebox" style="palette-saturation: -50%">-50%</Widget>
-					<Widget class="purplebox" style="palette-saturation: -25%">-25%</Widget>
-					<Widget class="purplebox" style="palette-saturation: 0%">0%</Widget>
-					<Widget class="purplebox" style="palette-saturation: 25%">25%</Widget>
-					<Widget class="purplebox" style="palette-saturation: 50%">50%</Widget>
-					<Widget class="purplebox" style="palette-saturation: 75%">75%</Widget>
-					<Widget class="purplebox" style="palette-saturation: 100%">100%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: -100%">-100%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: -75%">-75%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: -50%">-50%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: -25%">-25%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: 0%">0%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: 25%">25%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: 50%">50%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: 75%">75%</Widget>
+					<Widget Class="purplebox" Style="palette-saturation: 100%">100%</Widget>
 				</Group-->
 
-	   		    <Group class="box" Caption="Inheritence">
-	   				<vbox class="lighter">
+	   		    <Group Class="box" Caption="Inheritence">
+	   				<vbox Class="lighter">
 	   			      <Button>Lighter...</Button>
 
-	   			      <vbox class="lighter">
+	   			      <vbox Class="lighter">
 	   				     <Button>Lighter...</Button>
 
-	   				     <vbox class="lighter">
+	   				     <vbox Class="lighter">
 	   					    <Button>Lighter...</Button>
 
-	   					    <vbox class="lighter">
+	   					    <vbox Class="lighter">
 	   						   <Button>Lighter...</Button>
 	   					    </vbox>
 	   				     </vbox>
 	   			      </vbox>
 	   			   </vbox>
 
-	   			   <vbox class="darker">
+	   			   <vbox Class="darker">
 	   				   <Button >Darker...</Button>
 
-	   			       <vbox class="darker">
+	   			       <vbox Class="darker">
 	   					   <Button>Darker...</Button>
 
-	   				       <vbox class="darker">
+	   				       <vbox Class="darker">
 	   						   <Button>Darker...</Button>
 
-	   					       <vbox class="darker">
+	   					       <vbox Class="darker">
 	   						       <Button>Darker...</Button>
 	   					       </vbox>
 	   				       </vbox>

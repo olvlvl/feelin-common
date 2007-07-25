@@ -157,7 +157,7 @@ F_METHOD(int32,mStrobo)
 //+
 
 ///Main
-int32 main(void)
+int main(void)
 {
 	FClass *cc;
 	FObject app,win;
@@ -170,11 +170,11 @@ int32 main(void)
 	{
 		F_METHODS_ADD(mStrobo, "Stobo"),
 
-		F_METHODS_ADD_STATIC(mNew,       FM_New),
-		F_METHODS_ADD_STATIC(mShow,      FM_Area_Show),
-		F_METHODS_ADD_STATIC(mHide,      FM_Area_Hide),
-		F_METHODS_ADD_STATIC(mAskMinMax, FM_Area_AskMinMax),
-		F_METHODS_ADD_STATIC(mDraw,      FM_Area_Draw),
+		F_METHODS_OVERRIDE_STATIC(mNew,       FM_New),
+		F_METHODS_OVERRIDE_STATIC(mShow,      FM_Area_Show),
+		F_METHODS_OVERRIDE_STATIC(mHide,      FM_Area_Hide),
+		F_METHODS_OVERRIDE_STATIC(mAskMinMax, FM_Area_AskMinMax),
+		F_METHODS_OVERRIDE_STATIC(mDraw,      FM_Area_Draw),
 
 		F_ARRAY_END
 	};
@@ -211,7 +211,7 @@ int32 main(void)
 			   FA_Application_Base,         "CLASS2",
 
 			   Child, win = WindowObject,
-				  FA_Element_ID, "windows.main",
+				  FA_Element_Id, "windows.main",
 				  FA_Element_Persist, "width height",
 				  FA_Window_Title, "Crazy colors",
 				  FA_Window_Open,   TRUE,

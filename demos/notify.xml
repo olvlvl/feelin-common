@@ -9,25 +9,25 @@
 		Description = 'Testing...'
 		Base        = 'demo_notify'>
 
-		<Window id="win" Title="Feelin : Notify" Open="true">
+		<Window Id="win" Title="Feelin : Notify" Open="true">
 			<vbox>
 				<Text Contents="&lt;align=justify&gt;&lt;pens style=shadow&gt;Notification example :&lt;br&gt;four Proportionnals,&lt;br&gt;a Slider and a Gauge" SetMax="both" Chainable="false" />
 
-				<Scrollbar id="p1" Entries="32" Visible="16" />
-				<Prop id='p2' Entries='32' Visible='8' />
-				<Scrollbar id='p3' Entries='32' Visible='4' />
-				<Prop id='p4' Entries='32' Visible='2' style="height: auto;">
-					<Text class="button" Contents="custom knob" Chainable="false" />
+				<Scrollbar Id="p1" Entries="32" Visible="16" />
+				<Prop Id='p2' Entries='32' Visible='8' />
+				<Scrollbar Id='p3' Entries='32' Visible='4' />
+				<Prop Id='p4' Entries='32' Visible='2' Style="height: auto;">
+					<Text Class="button" Contents="custom knob" Chainable="false" />
 				</Prop>
 
 				<Bar />
 
-				<vbox style="height: auto;">
-					<Slider id="s" Persist="value" Max="32" Format="<pens style=emboss shadow=halfshadow>Level: %ld">
-						<Text class="slider-knob" style="font: Diamond/12" />
+				<vbox Style="height: auto;">
+					<Slider Id="s" Persist="value" Max="32" Format="<pens style=emboss shadow=halfshadow>Level: %ld">
+						<Text Class="slider-knob" Style="font: Diamond/12" />
 					</Slider>
 
-					<Gauge id="g" Max="32" />
+					<Gauge Id="g" Max="32" />
 					<Scale />
 				</vbox>
 			</vbox>

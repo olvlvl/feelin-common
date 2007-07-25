@@ -175,21 +175,19 @@ list
 {
 	background: halfshine;
 	border-frame: xp;
-	padding: 2;
+	padding: 2px;
 	cursor-active: 90° #BFCDE5 #A8B9D4 #889DBE #9DB0CD;
 	cursor-selected: #C1B1B0;
-	/*color-scheme: <scheme shine='#FFFFFF' dark='#141414' text='text' highlight='#3466A3'/>;*/
-	palette: inherit white #141414;
 	palette-highlight: #3466A3;
 	spacing: 1;
 	steps: 3;
 }
-/*
+
 list-read
 {
-	frame: <frame id='1' padding='1 2' />;
+	border: 1px solid dark;
 }
-
+/*
 list-read-title
 {
 	background: <image type='gradient' angle='0' start='halfshine' end='halfshadow' />;

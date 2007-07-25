@@ -20,7 +20,7 @@ void f_decode_padding(STRPTR Spec, FPadding *Padding)
 			{
 				STRPTR start = Spec++;
 
-				while (c = *Spec)
+				while ((c = *Spec) != '\0')
 				{
 					if (c != ' ')
 					{

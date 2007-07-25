@@ -12,24 +12,24 @@
 		Base=         "demo_Lines"
 	>
 
-		<Window id="win" Title="&window-title;" Open="true" Persist="width height">
-			<Page id="grp">
+		<Window Id="win" Title="&window-title;" Open="true" Persist="width height">
+			<Page Id="grp">
 				<vbox Name="One">
 					<&class:line; />
 
 					<!--Group Columns="2" class="box" Caption="Controls" SetMax="height" ContextHelp="Settings made on this page will be reflected<br>to all Lines objects"-->
-					<Group Columns="2" class="box" Caption="Controls" SetMax="height">
+					<Group Columns="2" Class="box" Caption="Controls" SetMax="height">
 						<HLabel>Cycle :</HLabel>
 						<!--Slider id="ccl" Persist="value" Max="200" Value="1" ContextHelp="Adjust the number of lines to draw<br>before a color cyling.<br><br>Setting this to 0 disable cycling." /-->
-						<Slider id="ccl" Persist="value" Max="200" Value="1" />
+						<Slider Id="ccl" Persist="value" Max="200" Value="1" />
 
 						<HLabel>Trail :</HLabel>
 						<!--Slider id="trl" Persist="value" Min="8" Max="100" Value="16" ContextHelp="Adjust the number of trailing lines." /-->
-						<Slider id="trl" Persist="value" Min="8" Max="100" Value="16" />
+						<Slider Id="trl" Persist="value" Min="8" Max="100" Value="16" />
 
 						<HLabel>Micros :</HLabel>
 						<!--Slider id="spd" Persist="value" Min="5000" Max="100000" Value="10000" Steps="20" ContextHelp="Adjust the number of micro seconds<br>to wait between each drawing." /-->
-						<Slider id="spd" Persist="value" Min="5000" Max="100000" Value="10000" Steps="20" />
+						<Slider Id="spd" Persist="value" Min="5000" Max="100000" Value="10000" Steps="20" />
 					</Group>
 				</vbox>
 

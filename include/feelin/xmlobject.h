@@ -12,16 +12,16 @@
 
 $VER: 03.00 (2006/02/26)
 
-    Added FV_XMLOBJECT_ID_STYLE F_XMLOBJECT_ID_ID F_XMLOBJECT_ID_ID_LEN
-    F_XMLOBJECT_ID_OBJECTS F_XMLOBJECT_ID_OBJECTS_LEN F_XMLOBJECT_ID_STYLE
-    F_XMLOBJECT_ID_STYLE_LEN macros.
+	Added FV_XMLOBJECT_ID_STYLE F_XMLOBJECT_ID_ID F_XMLOBJECT_ID_ID_LEN
+	F_XMLOBJECT_ID_OBJECTS F_XMLOBJECT_ID_OBJECTS_LEN F_XMLOBJECT_ID_STYLE
+	F_XMLOBJECT_ID_STYLE_LEN macros.
 
 $VER: 02.00 (2005/12/01)
 
-    Added macros F_MSG_XMLOBJECT_FIND, F_MSG_XMLOBJECT_CREATE and F_XMLSOURCES_PATH
+	Added macros F_MSG_XMLOBJECT_FIND, F_MSG_XMLOBJECT_CREATE and F_XMLSOURCES_PATH
 
-    'name' markup has been renamed to 'id',  thus  FV_XMLOBJECT_ID_NAME  has
-    been renamed as FV_XMLOBJECT_ID_ID.
+	'name' markup has been renamed to 'id',  thus  FV_XMLOBJECT_ID_NAME  has
+	been renamed as FV_XMLOBJECT_ID_ID.
 
 ************************************************************************************************/
 
@@ -32,8 +32,8 @@ $VER: 02.00 (2005/12/01)
 
 typedef struct FeelinXMLReference
 {
-    STRPTR                          Name;
-    FObject                        *ObjectPtr;
+	STRPTR                          Name;
+	FObject                        *ObjectPtr;
 }
 FXMLReference;
 
@@ -49,11 +49,8 @@ struct  FS_XMLObject_Create                     { FXMLMarkup *Markup; APTR Pool;
 
 #define F_XMLOBJECT_ID                          "id"
 #define F_XMLOBJECT_OBJECTS                     "feelin:objects"
-
-#ifdef F_NEW_STYLES
 #define F_XMLOBJECT_STYLE                       "style"
 #define F_XMLOBJECT_CLASS                       "class"
-#endif
 
 #define F_XML_REFS                              feelin_auto_xml_refs
 #define F_XML_REFS_INIT(num)                    FXMLReference feelin_auto_xml_refs[num + 1]; uint32 feelin_auto_xml_refs_count=0

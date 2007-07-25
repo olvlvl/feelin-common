@@ -204,10 +204,10 @@ STATIC F_METHODS_ARRAY =
 {
    F_METHODS_ADD(mTrigger, "Trigger"),
 
-   F_METHODS_ADD_STATIC(mNew,       FM_New),
-   F_METHODS_ADD_STATIC(mSet,       FM_Set),
-   F_METHODS_ADD_STATIC(mSetup,     FM_Element_Setup),
-   F_METHODS_ADD_STATIC(mCleanup,   FM_Element_Cleanup),
+   F_METHODS_OVERRIDE_STATIC(mNew,       FM_New),
+   F_METHODS_OVERRIDE_STATIC(mSet,       FM_Set),
+   F_METHODS_OVERRIDE_STATIC(mSetup,     FM_Element_Setup),
+   F_METHODS_OVERRIDE_STATIC(mCleanup,   FM_Element_Cleanup),
 
    F_ARRAY_END
 };
@@ -224,7 +224,7 @@ STATIC F_TAGS_ARRAY =
 
 /*** main **************************************************************************************/
 
-int32 main()
+int main()
 {
 	FObject app,win,spd,my;
 
@@ -243,7 +243,7 @@ int32 main()
 				FA_Application_Base,        "DEMO_SHA1",
 
 				Child, win = WindowObject,
-					FA_Element_ID, "win",
+					FA_Element_Id, "win",
 					FA_Element_Persist, "width height",
 
 					FA_Window_Title, "SignalHandler Class",
@@ -274,7 +274,7 @@ int32 main()
 						End,
 
 						Child, spd = IFEELIN F_MakeObj(FV_MakeObj_Slider, TRUE,5000,1000000,50000,
-							FA_Element_ID, "speed",
+							FA_Element_Id, "speed",
 							FA_Element_Persist, "value",
 							FA_Widget_SetMax,     FV_Widget_SetHeight,
 							//FA_ContextHelp,     "Adjust the number of micro seconds\nto wait between each string.",

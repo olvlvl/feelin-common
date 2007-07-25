@@ -13,26 +13,34 @@ struct FeelinBase *FeelinBase;
 struct FeelinIFace *IFeelin;
 #endif
 
-struct FS_THREAD_INIT                           { struct Task *Owner; };
+struct FS_THREAD_DATA                   		{ struct Task *Owner; };
 
 ///Thread_Main
-F_THREAD_ENTRY(Thread_Main)
+F_HOOKM(FThreadMsg *, Thread_Main, FS_Thread_Run)
 {
-	IFEELIN F_Log(0,"Thread_Main() Thread (0x%08lx) Public (0x%08lx) - Owner (0x%08lx)",Thread,Public,((struct FS_THREAD_INIT *)UserData)->Owner);
+	uint32 id_Pop = Msg->Public->id_Pop;
+	uint32 id_Wait = Msg->Public->id_Wait;
+	
+	IFEELIN F_Log
+	(
+		0,
+		"Thread_Main() Thread (0x%08lx) Public (0x%08lx) - Owner (0x%08lx)",
+		Obj, Msg->Public, ((struct FS_THREAD_DATA *) Hook->h_Data)->Owner
+	);
  
 	for (;;)
 	{
-		FThreadMsg *msg = (FThreadMsg *) IFEELIN F_Do(Thread, Public->id_Pop);
+		FThreadMsg *msg = (FThreadMsg *) IFEELIN F_Do(Obj, id_Pop);
 	  
 		if (msg)
 		{
-			IFEELIN F_Log(0,"Msg 0x%08lx - Action 0x%08lx",msg,msg -> Action);
+			IFEELIN F_Log(0,"Msg 0x%08lx - Action 0x%08lx", msg, msg->Action);
 
-			switch (msg -> Action)
+			switch (msg->Action)
 			{
 				case FV_Thread_Hello:
 				{
-					msg -> Return = TRUE;
+					msg->Return = TRUE;
 				}
 				break;
 
@@ -40,45 +48,48 @@ F_THREAD_ENTRY(Thread_Main)
 				{
 					IFEELIN F_Log(0,"bye");
 
-					msg -> Return = TRUE;
+					msg->Return = TRUE;
 
 					return msg;
 				}
 				break;
 			}
 
-			IEXEC ReplyMsg(msg);
+			IEXEC ReplyMsg((struct Message *) msg);
 		}
 		else
 		{
 			IFEELIN F_Log(0,"waiting...");
 
-			IFEELIN F_Do(Thread, Public->id_Wait, 0);
+			IFEELIN F_Do(Obj, id_Wait, 0);
 		}
 	}
 }
 //+
 
-int32 main(void)
+int main(void)
 {
-	struct FS_THREAD_INIT msg;
+	struct Hook thread_hook;
+	struct FS_THREAD_DATA thread_data;
 
-	msg.Owner = IEXEC FindTask(NULL);
+	thread_data.Owner = IEXEC FindTask(NULL);
+
+	thread_hook.h_Entry = (HOOKFUNC) Thread_Main;
+	thread_hook.h_Data = &thread_data;
 
 	if (F_FEELIN_OPEN)
 	{
 		FObject thread = ThreadObject,
 			
-			"FA_Thread_Entry",     Thread_Main,
+			"FA_Thread_Hook",     	&thread_hook,
 			"FA_Thread_Name",      "test.thread",
 			"FA_Thread_Priority",  "Low",
-			"FA_Thread_UserData",   &msg,
 
 			End;
 		   
 		if (thread)
 		{
-			IDOS_ Printf("Thread 0x%08lx - Priority %ld.\nUse Ctrl-C to terminate the demo.\n",thread,IFEELIN F_Get(thread, (uint32) "FA_Thread_Priority"));
+			IDOS_ Printf("Thread 0x%08lx - Priority %ld.\nUse Ctrl-C to terminate the demo.\n", (int32) thread, IFEELIN F_Get(thread, (uint32) "FA_Thread_Priority"));
 
 			IEXEC Wait(SIGBREAKF_CTRL_C);
 

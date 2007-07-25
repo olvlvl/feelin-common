@@ -16,9 +16,7 @@
 struct  FeelinBase                 *FeelinBase;
 
 #ifdef __amigaos4__
-
 struct FeelinIFace                 *IFeelin;
-
 #else
 
 #define GfxBase                     FeelinBase->Graphics
@@ -211,16 +209,16 @@ through  its  chain using arrows instead of tabulations (more confortable hu
 //+
 
 /// Main
-int32 main(void)
+int main(void)
 {
 	STATIC F_METHODS_ARRAY =
 	{
-		F_METHODS_ADD_STATIC(mNew,         FM_New),
-		F_METHODS_ADD_STATIC(mSetup,       FM_Element_Setup),
-		F_METHODS_ADD_STATIC(mCleanup,     FM_Element_Cleanup),
-		F_METHODS_ADD_STATIC(mAskMinMax,   FM_Area_AskMinMax),
-		F_METHODS_ADD_STATIC(mDraw,        FM_Area_Draw),
-		F_METHODS_ADD_STATIC(mHandleEvent, FM_Widget_HandleEvent),
+		F_METHODS_OVERRIDE_STATIC(mNew,         FM_New),
+		F_METHODS_OVERRIDE_STATIC(mSetup,       FM_Element_Setup),
+		F_METHODS_OVERRIDE_STATIC(mCleanup,     FM_Element_Cleanup),
+		F_METHODS_OVERRIDE_STATIC(mAskMinMax,   FM_Area_AskMinMax),
+		F_METHODS_OVERRIDE_STATIC(mDraw,        FM_Area_Draw),
+		F_METHODS_OVERRIDE_STATIC(mHandleEvent, FM_Widget_HandleEvent),
 
 		F_ARRAY_END
 	};
@@ -257,7 +255,7 @@ int32 main(void)
 				FA_Application_Base, "DEMOCLASS1",
 
 				Child, win = WindowObject,
-					FA_Element_ID, "win",
+					FA_Element_Id, "win",
 					FA_Element_Persist, "width height",
 					FA_Window_Title, "My first subclass",
 					FA_Window_Open, TRUE,

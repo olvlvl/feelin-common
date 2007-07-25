@@ -4,12 +4,19 @@
 **  Feelin class library startup code.
 **
 *************************************************************************************************
-	
+
+$VER: 01.10 (2006/12/06)
+
+	The automatic global variable support was broken with GCC, because I was
+	checking for PROTO_<LIB>_H, when _PROTO_<LIB>_H was defined.
+
+
 $VER: 01.04 (2005/12/04)
 
 	Uses the new F_QUERY_PROTO() and F_QUERY_CALL() macros.  Enhanced  debug
 	macros. Correct some mistakes in OS4 variables names.
-   
+
+
 $VER: 01.03 (2005/09/30)
 
 	If PROTO_DOS_H, PROTO_GRAPHICS_H, PROTO_LAYERS_H,  PROTO_INTUITION_H  or
@@ -17,31 +24,35 @@ $VER: 01.03 (2005/09/30)
 	created for their library base and their  interface  (if  the  class  is
 	compiled  under  AmigaOS4).  This  automatic  feature can be disabled by
 	defining F_CLASS_NO_AUTO_PROTO.
- 
+
+
 $VER: 01.02 (2005/08/29)
 
 	Added macros to request libraries base : F_CLASS_USE_DOS,
 	F_CLASS_USE_INTUITION F_CLASS_USE_GRAPHICS F_CLASS_USE_LAYERS
 	F_CLASS_USE_UTILITY.
-	
+
 	Added AmigaOS4 support.
-	 
+
+
 $VER: 01.01 (2005/08/23)
 
 	GROG: MorphOS edition. Re-enable debug.
+
 
 $VER: 01.00 (2005/08/09)
 
 	Rewrote class startup. It's no longer a linked object, but a file to include in the
 	"Project.c" file of the class.
-	
+
 	The following macros must be defined by the compiler when creating the object :
-		
+
 	F_CLASS_NAME: The name of the class e.g. "Area"
 	F_CLASS_VERSION_STRING: The version string e.g. "09.12 (2005/07/25)"
 	F_CLASS_VERSION: The version number of the class e.g. "09"
 	F_CLASS_REVISION: The revision number of the class e.g. "12"
 	F_CLASS_AUTHOR: The author of the class e.g. "Olivier LAVIALE"
+
 
 ************************************************************************************************/
 
@@ -129,7 +140,7 @@ extern F_QUERY_PROTO();
 
 	GOFROMIEL @ YOMGUI: Once we have removed the 68k emulation, will  it  be
 	possible to remove this __abox__ thing ?
- 
+
 */
 
 #ifdef __MORPHOS__
@@ -150,7 +161,7 @@ struct ExecIFace                    *IExec;
 
 struct FeelinBase                   *FeelinBase;
 #ifdef __amigaos4__
-struct FeelinIFace                  *IFeelin;       
+struct FeelinIFace                  *IFeelin;
 #endif
 
 #ifndef F_CLASS_NO_AUTO_PROTO
@@ -163,53 +174,51 @@ des functions de  graphics.library,  ben  je  crée  les  variables  globales
 adéquates. F_CLASS_NO_AUTO_PROTO sert juste a supprimer cette automatisme au
 cas où le developeur préfére recourir à d'autres méthode,  comme  un  double
 référencement par exemple...
- 
+
 */
 
-#ifdef PROTO_DOS_H
+#if defined(PROTO_DOS_H) | defined(_PROTO_DOS_H)
 struct DosLibrary                   *DOSBase;
 #ifdef __amigaos4__
 struct DOSIFace                     *IDOS;
 #endif
 #endif
 
-#ifdef PROTO_GRAPHICS_H
+#if defined (PROTO_GRAPHICS_H) | defined (_PROTO_GRAPHICS_H)
 struct GfxBase                      *GfxBase;
 #ifdef __amigaos4__
 struct GraphicsIFace                *IGraphics;
 #endif
 #endif
 
-#ifdef PROTO_LAYERS_H
+#if defined (PROTO_LAYERS_H) | defined(_PROTO_LAYERS_H)
 struct Library                      *LayersBase;
 #ifdef __amigaos4__
 struct LayersIFace                  *ILayers;
 #endif
 #endif
 
-#ifdef PROTO_INTUITION_H
+#if defined (PROTO_INTUITION_H) | defined(_PROTO_INTUITION_H)
 struct IntuitionBase                *IntuitionBase;
 #ifdef __amigaos4__
 struct IntuitionIFace               *IIntuition;
 #endif
 #endif
 
-#ifdef PROTO_UTILITY_H
-#ifdef __amigaos4__
+#if defined (PROTO_UTILITY_H) | defined(_PROTO_UTILITY_H)
 struct UtilityBase                  *UtilityBase;
+#ifdef __amigaos4__
 struct UtilityIFace                 *IUtility;
-#else
-struct Library                      *UtilityBase;
 #endif
 #endif
 
-#ifdef PROTO_LOCALE_H
+#if defined (PROTO_LOCALE_H) | defined(_PROTO_LOCALE_H)
 struct Library                      *LocaleBase;
 #ifdef __amigaos4__
 struct LocaleIFace                  *ILocale;
 #endif
 #endif
- 
+
 #endif
 //+
 
@@ -234,7 +243,7 @@ __attribute__((used))
 	RTC_MATCHWORD,
 	&ROMTag,
 	&ROMTag + 1,
-	
+
 	FF_LIBRARY,
 	F_CLASS_VERSION,
 	NT_LIBRARY,
@@ -262,13 +271,13 @@ const char feelin_auto_class_id[] = "$VER: " F_CLASS_NAME " " F_CLASS_VERSION_ST
 SAVEDS STATIC F_LIB_INIT
 {
 	F_LIB_INIT_ARGS
-	
+
 	DEBUG_INIT(SelfBase, SegList, SYS);
-	
+
 #ifdef __amigaos4__
 
 	/* The ROMTAG Initialisation */
-	
+
 	SelfBase->lib.lib_Node.ln_Type = NT_LIBRARY;
 	SelfBase->lib.lib_Node.ln_Pri  = 0;
 	SelfBase->lib.lib_Node.ln_Name = (STRPTR) &feelin_auto_class_name;
@@ -276,14 +285,14 @@ SAVEDS STATIC F_LIB_INIT
 	SelfBase->lib.lib_Version      = F_CLASS_VERSION;
 	SelfBase->lib.lib_Revision     = F_CLASS_REVISION;
 	SelfBase->lib.lib_IdString     = (STRPTR) &feelin_auto_class_id;
-	
+
 	SysBase = (struct ExecBase *) SYS->Data.LibBase;
 	IExec   = (struct ExecIFace *) SYS;
- 
+
 #else
 
 	SysBase = SYS;
-	
+
 #endif
 
 	SelfBase->seglist = SegList;
@@ -295,48 +304,48 @@ SAVEDS STATIC F_LIB_INIT
 SAVEDS STATIC F_LIB_EXPUNGE
 {
 	F_LIB_EXPUNGE_ARGS
- 
+
 	APTR seglist = ClassBase -> seglist;
 
 	DEBUG_FCT(("ClassBase 0x%08lx\n",ClassBase));
-	
+
 	if (ClassBase -> lib.lib_OpenCnt)
 	{
 		DEBUG_FCT(("set LIBF_DELEXP\n"));
-		
+
 		ClassBase -> lib.lib_Flags |= LIBF_DELEXP;
-		
+
 		return 0;
 	}
 
 	/* We don't need a forbid() because Expunge and Close are called with a
 	pending forbid. But let's do it for safety if somebody does it by hand.
 	*/
-	
+
 	IEXEC Forbid();
-	
+
 	DEBUG_FCT(("remove the library\n"));
-	
+
 	IEXEC Remove(&ClassBase->lib.lib_Node);
-	
+
 	IEXEC Permit();
-	
+
 	DEBUG_FCT(("free the library\n"));
-	
+
 #ifdef __amigaos4__
 
 	IEXEC DeleteLibrary((struct Library *) ClassBase);
 
 #else
-	
+
 	IEXEC FreeMem((APTR) ((uint32) (ClassBase) - (uint32) (ClassBase->lib.lib_NegSize)),
 			ClassBase->lib.lib_NegSize + ClassBase->lib.lib_PosSize);
 
 #endif
-	
-	
+
+
 	DEBUG_FCT(("return Segment 0x08%lx to ramlib\n", seglist));
-	
+
 	return seglist;
 }
 //+
@@ -349,7 +358,7 @@ static F_LIB_OPEN
 
 	ClassBase->lib.lib_Flags &= ~LIBF_DELEXP;
 	ClassBase->lib.lib_OpenCnt++;
-	
+
 	return &ClassBase->lib;
 }
 //+
@@ -359,12 +368,12 @@ static F_LIB_CLOSE
 	F_LIB_CLOSE_ARGS
 
 	DEBUG_FCT(("0x%08lx <%s> OpenCount %ld\n",ClassBase, ClassBase->lib.lib_Node.ln_Name, ClassBase->lib.lib_OpenCnt));
- 
+
 	/* This call is protected by a Forbid() */
 
 	if (ClassBase->lib.lib_OpenCnt > 0)
 		ClassBase->lib.lib_OpenCnt--;
-	
+
 	if (ClassBase->lib.lib_OpenCnt == 0)
 	{
 		if (ClassBase->lib.lib_Flags & LIBF_DELEXP)
@@ -373,17 +382,17 @@ static F_LIB_CLOSE
 			DEBUG_FCT(("LIBF_DELEXP set\n"));
 
 #ifdef __MORPHOS__
-			
+
 			REG_A6 = (uint32) ClassBase;
-			
+
 			return lib_expunge();
 
 #elif defined(__amigaos4__)
-			
+
 			return lib_expunge(SelfIFace);
 
 #else
-			
+
 			return lib_expunge(ClassBase);
 
 #endif
@@ -400,9 +409,9 @@ static F_LIB_CLOSE
 ///lib_reserved
 static uint32 lib_reserved(void)
 {
-	
+
 	/* These useless lines are used to hide symbols and shutup the compiler */
- 
+
 	uint32 a = (uint32)(&ROMTag) - (uint32)(&ROMTag);
 
 /*
@@ -425,81 +434,81 @@ GOFROMIEL: c'est parce que ROMTag n'est utilisé nulle part
 SAVEDS STATIC F_LIB_QUERY
 {
 	F_LIB_QUERY_ARGS
-	
+
 	/* feelin.library */
- 
+
 	FeelinBase = Feelin;
-	
+
 	#ifdef __amigaos4__
 	IFeelin = FeelinBase->I_Feelin;
 	#endif
- 
+
 	DEBUG_FCT(("FeelinBase (%08lx)\n", FeelinBase));
 
 	#ifndef F_CLASS_NO_AUTO_PROTO
-	 
+
 		/* dos.library */
 
-		#ifdef PROTO_DOS_H
+		#if defined(PROTO_DOS_H) | defined(_PROTO_DOS_H)
 			DOSBase = FeelinBase->DOS;
-			
+
 			#ifdef __amigaos4__
 			IDOS = FeelinBase->I_DOS;
 			#endif
-			
+
 			DEBUG_FCT(("DOSBase (%08lx)\n", DOSBase));
 		#endif
-		
+
 		/* graphics.library */
 
-		#ifdef PROTO_GRAPHICS_H
+		#if defined(PROTO_GRAPHICS_H) | defined(_PROTO_GRAPHICS_H)
 			GfxBase = FeelinBase->Graphics;
-			
+
 			#ifdef __amigaos4__
 			IGraphics = FeelinBase->I_Graphics;
 			#endif
-			
+
 			DEBUG_FCT(("GfxBase (%08lx)\n", GfxBase));
 		#endif
-		
+
 		/* layers.library */
 
-		#ifdef PROTO_LAYERS_H
+		#if defined(PROTO_LAYERS_H) | defined(_PROTO_LAYERS_H)
 			LayersBase = FeelinBase->Layers;
-			
+
 			#ifdef __amigaos4__
 			ILayers = FeelinBase->I_Layers;
 			#endif
-			 
+
 			DEBUG_FCT(("LayersBase (%08lx)\n", LayersBase));
 		#endif
 
 		/* intuition.library */
-	 
-		#ifdef PROTO_INTUITION_H
+
+		#if defined(PROTO_INTUITION_H) | defined(_PROTO_INTUITION_H)
 			IntuitionBase = FeelinBase->Intuition;
-			
+
 			#ifdef __amigaos4__
 			IIntuition = FeelinBase->I_Intuition;
 			#endif
-			
+
 			DEBUG_FCT(("IntuitionBase (%08lx)\n", IntuitionBase));
 		#endif
 
 		/* utility.library */
-		
-		#ifdef PROTO_UTILITY_H
+
+		#if defined(PROTO_UTILITY_H) | defined(_PROTO_UTILITY_H)
 			UtilityBase = FeelinBase->Utility;
-			
+
 			#ifdef __amigaos4__
 			IUtility = FeelinBase->I_Utility;
 			#endif
-			 
+
 			DEBUG_FCT(("UtilityBase (%08lx)\n", UtilityBase));
 		#endif
-		
+
 	#endif
- 
+
 	return F_QUERY_CALL(Which);
 }
 //+
@@ -631,15 +640,15 @@ const APTR lib_func_table[] =
 	_FeelinClass_Release,
 	NULL,
 	NULL,
- 
+
 #else
- 
+
 	lib_open,
 	lib_close,
 	lib_expunge,
 
 #endif
- 
+
 	lib_reserved,
 
 	lib_query,
@@ -662,7 +671,7 @@ const APTR lib_func_table[] =
 
 #else
 
-static const struct FeelinLID lib_init_data[] =
+static const struct FeelinLID lib_init_data =
 {
 	0xA0,  8, NT_LIBRARY, 0,
 	0x80, 10, (STRPTR) &feelin_auto_class_name,
@@ -680,8 +689,9 @@ const uint32 lib_init_table[4] =
 {
    (uint32) sizeof (struct in_ClassBase),
    (uint32) lib_func_table,
-   (uint32) lib_init_data,
+   (uint32) &lib_init_data,
    (uint32) lib_init
 };
 
 #endif
+

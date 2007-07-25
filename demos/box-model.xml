@@ -2,11 +2,11 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Box Model" Open="true">
-			<Group style="background: yellow;" Orientation="vertical">
-		 		<Widget style="height: 20px; background: red; margin: 10px; border: 1px solid dark; padding: 10px; min-width: 10px; max-width: 100px;" />
-				<Button style="width: auto">auto-width</Button>
-		 		<Widget style="height: 20px; background: red; margin: 10px; border: 1px solid dark; padding: 10px; min-width: 10px; max-width: 30px;" />
+		<Window Id="win" Title="Box Model" Open="true">
+			<Group Style="background: yellow;" Orientation="vertical">
+		 		<Widget Style="height: 20px; background: red; margin: 10px; border: 1px solid dark; padding: 10px; min-width: 10px; max-width: 100px;" />
+				<Button Style="width: auto">auto-width</Button>
+		 		<Widget Style="height: 20px; background: red; margin: 10px; border: 1px solid dark; padding: 10px; min-width: 10px; max-width: 30px;" />
 		 	</Group>
 	  	</Window>
    	</Application>

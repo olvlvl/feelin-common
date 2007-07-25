@@ -2,13 +2,13 @@
 
 <feelin:application>
 	<Application>
-		<Window id="win" Title="Element Class" Open="true">
+		<Window Id="win" Title="Element Class" Open="true">
 			<Group Orientation="vertical">
 				<Button>button</Button>
-				<Button class="slider-knob">button with 'slider-knob' class</Button>
-				<Button class="gauge">button with 'gauge' class</Button>
-				<Button class="box">button with 'box' class</Button>
-				<Button class="scrollbar-knob">button with 'scrollbar-knob' class</Button>
+				<Button Class="slider-knob">button with 'slider-knob' class</Button>
+				<Button Class="gauge">button with 'gauge' class</Button>
+				<Button Class="box">button with 'box' class</Button>
+				<Button Class="scrollbar-knob">button with 'scrollbar-knob' class</Button>
 			</Group>
 		</Window>
    	</Application>

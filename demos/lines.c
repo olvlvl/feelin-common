@@ -419,14 +419,14 @@ STATIC F_METHODS_ARRAY =
 {
 	F_METHODS_ADD(mUpdate, "Update"),
 
-	F_METHODS_ADD_STATIC(mNew,       FM_New),
-	F_METHODS_ADD_STATIC(mDispose,   FM_Dispose),
-	F_METHODS_ADD_STATIC(mSet,       FM_Set),
+	F_METHODS_OVERRIDE_STATIC(mNew,       FM_New),
+	F_METHODS_OVERRIDE_STATIC(mDispose,   FM_Dispose),
+	F_METHODS_OVERRIDE_STATIC(mSet,       FM_Set),
 
-	F_METHODS_ADD_STATIC(mShow,      FM_Area_Show),
-	F_METHODS_ADD_STATIC(mHide,      FM_Area_Hide),
-	F_METHODS_ADD_STATIC(mAskMinMax, FM_Area_AskMinMax),
-	F_METHODS_ADD_STATIC(mDraw,      FM_Area_Draw),
+	F_METHODS_OVERRIDE_STATIC(mShow,      FM_Area_Show),
+	F_METHODS_OVERRIDE_STATIC(mHide,      FM_Area_Hide),
+	F_METHODS_OVERRIDE_STATIC(mAskMinMax, FM_Area_AskMinMax),
+	F_METHODS_OVERRIDE_STATIC(mDraw,      FM_Area_Draw),
 
 	F_ARRAY_END
 };
@@ -460,7 +460,7 @@ enum    {
 		};
 
 ///Main
-int32 main()
+int main()
 {
 	if (F_FEELIN_OPEN)
 	{
@@ -487,7 +487,49 @@ int32 main()
 							 
 			if (app)
 			{
+
 				FObject win, grp, ccl, trl, spd;
+
+				#ifdef F_NEW_GETELEMENTBYID
+				
+				bool32 ok = TRUE;
+				
+				struct element_item
+				{
+					STRPTR Id;
+					FObject *ObjectPtr;
+				};
+
+				struct element_item ar[] =
+				{
+					{ "win", &win },
+					{ "grp", &grp },
+					{ "ccl", &ccl },
+					{ "trl", &trl },
+					{ "spd", &spd },
+
+					F_ARRAY_END
+				};
+
+				struct element_item *item;
+
+				for ( item = ar ; item->Id ; item++)
+				{
+					FObject rc = (FObject) IFEELIN F_Do(app, FM_GetElementById, item->Id);
+
+					if (!rc)
+					{
+						IFEELIN F_Log(0, "Object '%s' is missing", item->Id);
+
+						ok = FALSE;
+
+						continue;
+					}
+
+					*item->ObjectPtr = rc;
+				}
+				
+				#else
 
 				IFEELIN F_Do
 				(
@@ -502,6 +544,13 @@ int32 main()
 					NULL
 				);
 
+				#endif
+
+				#ifdef F_NEW_GETELEMENTBYID
+				if (ok)
+				#endif
+				{
+
 				/* create notifications */
 	 
 				IFEELIN F_Do(win,FM_Notify,FA_Window_CloseRequest,TRUE,FV_Notify_Application,FM_Application_Shutdown,0);
@@ -512,6 +561,7 @@ int32 main()
 				/* launch the application */
 	 
 				IFEELIN F_Do(app, (uint32) "Run");
+				}
 
 				IFEELIN F_DisposeObj(app);
 			}

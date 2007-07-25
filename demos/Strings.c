@@ -96,10 +96,10 @@ F_HOOKM(void,drawblink,FS_ImageDisplay_HookDraw)
 }
 //+
 
-static struct Hook hook_drawback[]     = { NULL,NULL,(HOOKFUNC) drawback,     NULL,NULL };
-static struct Hook hook_drawcursor[]   = { NULL,NULL,(HOOKFUNC) drawcursor,   NULL,NULL };
-static struct Hook hook_drawcursor2[]  = { NULL,NULL,(HOOKFUNC) drawcursor2,  NULL,NULL };
-static struct Hook hook_drawblink[]    = { NULL,NULL,(HOOKFUNC) drawblink,    NULL,NULL };
+static struct Hook hook_drawback     	= { { NULL,NULL }, (HOOKFUNC) drawback,     NULL,NULL };
+static struct Hook hook_drawcursor   	= { { NULL,NULL }, (HOOKFUNC) drawcursor,   NULL,NULL };
+static struct Hook hook_drawcursor2  	= { { NULL,NULL }, (HOOKFUNC) drawcursor2,  NULL,NULL };
+static struct Hook hook_drawblink  		= { { NULL,NULL }, (HOOKFUNC) drawblink,    NULL,NULL };
 //+
 
 STATIC F_ENTITIES_ARRAY =

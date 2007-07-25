@@ -1,11 +1,22 @@
-# create all executables
+#
+#  Use this makefile to create feelin.library
+#
 
-include Feelin:Sources/_template/makefile.header.68k.sas
+include feelin:_make/makefile-header
 
-all : Prefs Setup
-	
+OBJECTS := \
+	prefs \
+	setup
+
+all : $(OBJECTS)
+
+#
+#
+#
+
 % : %.c
-	SC $<
-	
-Prefs : Prefs.c
-Setup : Setup.c
+	@ echo ">>" [1m$(@F)[0m
+	@ $(COMPILER) $(COMPILER_OPTIONS) $(COMPILER_OBJECT) $@ $(COMPILER_SOURCE) $^ $(LINKER_OPTIONS) $(LINKER_LIBS)
+
+clean :
+	delete quiet $(OBJECTS)
